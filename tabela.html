@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="rebanhologo.png" type="x-icon">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css" />
+
+  <title>Tabela</title>
+</head>
+
+<body>
+  <!-- Cabeçalho -->
+  <nav class="navbar navbar-expand-lg sticky-top bg-body-tertiary">
+    <div class="container-fluid container color-r">
+      <a class="navbar-brand fw-bold" href="index.html">
+        <img src="img/rebanhologo.png" alt="Bode" width="50px">
+        AGROPLAN
+
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        <ul class="navbar-nav color-r">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="formulario.html">Formulário</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#distribuicao">Distribuição</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#reposicaoo">Reposição</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#compras">Compras</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#estoque">Estoque</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#pesagem">Pesagem</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#custos">Custos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#consumo">Consumo</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container">
+      <!-- Conteúdo principal -->
+      <div id="principal">
+        <p class="ano_exibido text-center h2 my-3 color-r"></p>
+        <h5 id="distribuicao">Distribuição do Rebanho:</h5>
+        <table class="table table-responsive table-striped table-hover mb-5 rounded">
+          <thead class="table-bg">
+            <tr>
+              <th></th>
+              <th>Machos</th>
+              <th>Fêmeas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Rebanho</td>
+              <td id="machos"></td>
+              <td id="femeas"></td>
+            </tr>
+            <tr>
+              <td>Nascimentos</td>
+              <td class="nascimentos"></td>
+              <td class="nascimentos"></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h5 id="reposicaoo">Gestão de Perdas e Reposição</h5>
+        <table class="table w-100 table-striped table-hover mb-5">
+          <thead class="table-bg">
+            <tr>
+              <th></th>
+              <th>Machos</th>
+              <th>Fêmeas</th>
+              <th>Borregos</th>
+              <th>Borregas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Perdas</td>
+              <td></td>
+              <td id="perdas"></td>
+              <td class="perdas_1_ano"></td>
+              <td class="perdas_1_ano"></td>
+            </tr>
+            <tr>
+              <td>Descartes</td>
+              <td></td>
+              <td id="descartes"></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Reposição</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td id="reposicao"></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h5 id="compras">Controle de Vendas e Compras</h5>
+        <table class="table w-100 table-striped table-hover mb-5">
+          <thead class="table-bg">
+            <tr>
+              <th></th>
+              <th>Borregos</th>
+              <th>Borregas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Vendas</td>
+              <td id="venda_machos"></td>
+              <td id="venda_femeas"></td>
+            </tr>
+            <tr>
+              <td>Compras</td>
+              <td></td>
+              <td id="compra_femeas"></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h5 id="estoque">Estoque Final</h5>
+        <table class="table table-striped table-hover mb-5">
+          <thead class="table-bg">
+            <tr>
+              <th></th>
+              <th>Machos</th>
+              <th>Fêmeas</th>
+              <th>Borregos de Reposição</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Estoque Final</td>
+              <td id="machos_Final"></td>
+              <td id="femeas_Final"></td>
+              <td id="reposicao_Final"></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h5 id="pesagem">Peso Estimado do Rebanho</h5>
+        <table class="table table-striped table-hover mb-5">
+          <thead class="table-bg">
+            <tr>
+              <th></th>
+              <th>Machos</th>
+              <th>Fêmeas</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Peso Médio</td>
+              <td id="peso_medioM"></td>
+              <td id="peso_medioF"></td>
+              <td id="peso_total"></td>
+            </tr>
+            <tr>
+              <td>Equivalência de Unidade Animal</td>
+              <td id="EUA_machos"></td>
+              <td id="EUA_femeas"></td>
+              <td id="EUA_total"></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h5 id="custos">Receitas e Custos Operacionais</h5>
+        <table class="table table-striped table-hover mb-5">
+          <thead class="table-bg">
+            <tr>
+              <th>Receita</th>
+              <td id="receita"></td>
+            </tr>
+            <tr>
+              <th>Custo</th>
+              <td id="custo"></td>
+            </tr>
+            <tr>
+              <th>Custo Total</th>
+              <td id="custo_total"></td>
+            </tr>
+            <tr>
+              <th>Lucro</th>
+              <td id="lucro"></td>
+            </tr>
+          </thead>
+        </table>
+
+        <h5 id="consumo">Consumo Total de Matéria Seca - Animal e Rebanho</h5>
+        <table class="table table-striped table-hover mb-5">
+          <thead class="table-bg">
+            <tr>
+              <th></th>
+              <th>Animal/Dia</th>
+              <th>Rebanho/Dia</th>
+              <th>Rebanho/Periodo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Fêmeas</td>
+              <td id="consumoF"></td>
+              <td id="consumoFR"></td>
+              <td id="consumoFP"></td>
+            </tr>
+            <tr>
+              <td>Machos</td>
+              <td id="consumoM"></td>
+              <td id="consumoMR"></td>
+              <td id="consumoMP"></td>
+            </tr>
+            <tr>
+              <td>Borregos</td>
+              <td id="consumoB"></td>
+              <td id="consumoBR"></td>
+              <td id="consumoBP"></td>
+            </tr>
+            <tr>
+              <td>Borregas Período 1</td>
+              <td id="consumoBA1"></td>
+              <td id="consumoBA1R"></td>
+              <td id="consumoBA1P"></td>
+            </tr>
+            <tr>
+              <td>Borregos de Reposição</td>
+              <td id="consumoBA2"></td>
+              <td id="consumoBA2R"></td>
+              <td id="consumoBA2P"></td>
+            </tr>
+            <tr>
+              <td>Total</td>
+              <td id="consumoT"></td>
+              <td id="consumoTR"></td>
+              <td id="consumoTP"></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h5>Consumo de Matéria Volumosa e Concentrada - Rebanho e Período</h5>
+        <table class="table table-striped table-hover mb-5">
+          <thead class="table-bg">
+            <tr>
+              <th></th>
+              <th>Animal/Dia<br>(Kg Matéria Seca)</th>
+              <th>Rebanho/Dia<br>(Kg Matéria Seca)</th>
+              <th>Rebanho/Periodo<br>(Kg Matéria Seca)</th>
+              <th>Animal/Dia<br>(Kg Matéria Natural)</th>
+              <th>Rebanho/Dia<br>(Kg Matéria Natural)</th>
+              <th>Rebanho/Periodo<br>(Kg Matéria Natural)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Fêmeas</td>
+              <td id="volumosoF"></td>
+              <td id="volumosoFR"></td>
+              <td id="volumosoFP"></td>
+              <td id="volumosoCF"></td>
+              <td id="volumosoCFR"></td>
+              <td id="volumosoCFP"></td>
+            </tr>
+            <tr>
+              <td>Machos</td>
+              <td id="volumosoM"></td>
+              <td id="volumosoMR"></td>
+              <td id="volumosoMP"></td>
+              <td id="volumosoCM"></td>
+              <td id="volumosoCMR"></td>
+              <td id="volumosoCMP"></td>
+            </tr>
+            <tr>
+              <td>Borregos</td>
+              <td id="volumosoB"></td>
+              <td id="volumosoBR"></td>
+              <td id="volumosoBP"></td>
+              <td id="volumosoCB"></td>
+              <td id="volumosoCBR"></td>
+              <td id="volumosoCBP"></td>
+            </tr>
+            <tr>
+              <td>Borregas Período 1</td>
+              <td id="volumosoBA1"></td>
+              <td id="volumosoBA1R"></td>
+              <td id="volumosoBA1P"></td>
+              <td id="volumosoCBA1"></td>
+              <td id="volumosoCBA1R"></td>
+              <td id="volumosoCBA1P"></td>
+            </tr>
+            <tr>
+              <td>Borregos de Reposição</td>
+              <td id="volumosoBA2"></td>
+              <td id="volumosoBA2R"></td>
+              <td id="volumosoBA2P"></td>
+              <td id="volumosoCBA2"></td>
+              <td id="volumosoCBA2R"></td>
+              <td id="volumosoCBA2P"></td>
+            </tr>
+            <tr>
+              <td>Total</td>
+              <td id="volumosoT"></td>
+              <td id="volumosoTR"></td>
+              <td id="volumosoTP"></td>
+              <td id="volumosoCT"></td>
+              <td id="volumosoCTR"></td>
+              <td id="volumosoCTP"></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h5>Consumo de Ração Concentrada - Rebanho e Período</h5>
+        <table class="table table-striped">
+          <thead class="table-bg">
+            <tr>
+              <th></th>
+              <th scope="col">Animal/Dia<br>(Kg Matéria Seca)</th>
+              <th scope="col">Rebanho/Dia<br>(Kg Matéria Seca)</th>
+              <th scope="col">Rebanho/Periodo<br>(Kg Matéria Seca)</th>
+              <th scope="col">Animal/Dia<br>(Kg Matéria Natural)</th>
+              <th scope="col">Rebanho/Dia<br>(Kg Matéria Natural)</th>
+              <th scope="col">Rebanho/Periodo<br>(Kg Matéria Natural)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="elementos">Fêmeas</td>
+              <td><p id="concentradoF" class="elementos"></p></td>
+              <td><p id="concentradoFR" class="elementos"></p></td>
+              <td><p id="concentradoFP" class="elementos"></p></td>
+              <td><p id="concentradoCF" class="elementos"></p></td>
+              <td><p id="concentradoCFR" class="elementos"></p></td>
+              <td><p id="concentradoCFP" class="elementos"></p></td>
+            </tr>
+            <tr>
+              <td class="elementos">Machos</td>
+              <td><p id="concentradoM" class="elementos"></p></td>
+              <td><p id="concentradoMR" class="elementos"></p></td>
+              <td><p id="concentradoMP" class="elementos"></p></td>
+              <td><p id="concentradoCM" class="elementos"></p></td>
+              <td><p id="concentradoCMR" class="elementos"></p></td>
+              <td><p id="concentradoCMP" class="elementos"></p></td>
+            </tr>
+            <tr>
+              <td class="elementos">Borregos</td>
+              <td><p id="concentradoB" class="elementos"></p></td>
+              <td><p id="concentradoBR" class="elementos"></p></td>
+              <td><p id="concentradoBP" class="elementos"></p></td>
+              <td><p id="concentradoCB" class="elementos"></p></td>
+              <td><p id="concentradoCBR" class="elementos"></p></td>
+              <td><p id="concentradoCBP" class="elementos"></p></td>
+            </tr>
+            <tr>
+              <td class="elementos">Borregas Periodo 1</td>
+              <td><p id="concentradoBA1" class="elementos"></p></td>
+              <td><p id="concentradoBA1R" class="elementos"></p></td>
+              <td><p id="concentradoBA1P" class="elementos"></p></td>
+              <td><p id="concentradoCBA1" class="elementos"></p></td>
+              <td><p id="concentradoCBA1R" class="elementos"></p></td>
+              <td><p id="concentradoCBA1P" class="elementos"></p></td>
+            </tr>
+            <tr>
+              <td class="elementos">Borregos de Reposição</td>
+              <td><p id="concentradoBA2" class="elementos"></p></td>
+              <td><p id="concentradoBA2R" class="elementos"></p></td>
+              <td><p id="concentradoBA2P" class="elementos"></p></td>
+              <td><p id="concentradoCBA2" class="elementos"></p></td>
+              <td><p id="concentradoCBA2R" class="elementos"></p></td>
+              <td><p id="concentradoCBA2P" class="elementos"></p></td>
+            </tr>
+            <tr>
+              <td class="elementos">Total</td>
+              <td><p id="concentradoT" class="elementos"></p></td>
+              <td><p id="concentradoTR" class="elementos"></p></td>
+              <td><p id="concentradoTP" class="elementos"></p></td>
+              <td><p id="concentradoCT" class="elementos"></p></td>
+              <td><p id="concentradoCTR" class="elementos"></p></td>
+              <td><p id="concentradoCTP" class="elementos"></p></td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+      <div class="w-100 d-flex justify-content-center">
+        <ul class="pagination">
+          <li class="page-item">
+            <button id="retroceder" class="page-link">&laquo; Retroceder</button>
+          </li>
+          <li class="page-item" aria-current="page">
+            <a class="ano_exibido page-link" href="#principal"></a>
+          </li>
+          <li class="page-item">
+            <button id="avancar" class="page-link"> Avançar &raquo;</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+<!-- Rodapé -->
+<footer class="pt-4 bg-light ">
+  <div class="footer-content ">
+    <img src="img/logos-ifce-cits.png" alt="" width="300px">
+    <img src="img/logos-gov-midr.png" alt="" width="350px">
+  </div>
+  <div class="footer-bottom">
+    &copy; 2024
+  </div>
+</footer>
+
+  <script src="https://kit.fontawesome.com/decee3670e.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <script src="Index.js" type="Module"></script>
+</body>
+
+</html>

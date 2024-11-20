@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="rebanhologo.png" type="x-icon">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css" />
+  <title>Formulário</title>
+</head>
+
+<body>
+  <!-- Cabeçalho -->
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid container color-r">
+      <a class="navbar-brand fw-bold" href="index.html">
+        <img src="img/rebanhologo.png" alt="Bode" width="50px">
+        AGROPLAN
+
+        <!-- Rebanho -->
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        <ul class="navbar-nav color-r">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="index.html">Página inicial</a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Título e Subtítulo -->
+  <section id="formulario">
+    <div class="row d-flex justify-content-center my-5 w-100">
+      <form class="col-6 form shadow-lg p-4 rounded border-r" id="Form">
+        <h3 class="text-center mb-3">Preencha os dados</h3>
+        <div class="d-flex gap-2">
+          <div class="w-100">
+            <label for="femaleInput">Fêmeas Iniciais:</label>
+            <input class="form-control" type="number" id="femaleInput" name="femaleInput" step="any" required />
+          </div>
+          <div class="w-100">
+            <label for="maxFemaleInput">Máximo de fêmeas</label>
+            <input class="form-control" type="number" id="maxFemaleInput" name="maxFemaleInput" step="any" required />
+          </div>
+          <div class="w-100">
+            <label for="maleFemaleInput">Fêmea : Macho</label>
+            <input class="form-control" type="number" id="maleFemaleInput" name="maleFemaleInput" step="any" required />
+          </div>
+        </div>
+
+        <div class="d-flex gap-2 mt-3">
+          <div class="w-100">
+            <label for="partosPorAnoInput">Partos por ano</label>
+            <input class="form-control" type="number" id="partosPorAnoInput" name="partosPorAnoInput" step="any"
+              required />
+          </div>
+          <div class="w-100">
+            <label for="prolificidadeInput">Prolificidade</label>
+            <input class="form-control" type="number" id="prolificidadeInput" name="prolificidadeInput" step="any"
+              required />
+          </div>
+          <div class="w-100">
+            <label for="fertilidadeInput">% Fertilidade</label>
+            <input class="form-control" type="number" id="fertilidadeInput" name="fertilidadeInput" step="any"
+              required />
+          </div>
+        </div>
+
+        <div class="d-flex gap-2 mt-3">
+          <div class="w-100">
+            <label for="mortalidadeInput">% Mortalidade acima de 1 ano</label>
+            <input class="form-control flex-1" type="number" id="mortalidadeInput" name="mortalidadeInput" step="any"
+              required />
+          </div>
+          <div class="w-100">
+            <label for="mortalidade1AnoInput">% Mortalidade de ate um ano</label>
+            <input class="form-control" type="number" id="mortalidade1AnoInput" name="mortalidade1AnoInput" step="any"
+              required />
+          </div>
+        </div>
+
+        <h3 class="text-center mt-4 mb-3">Pesagens</h3>
+
+
+        <div class="d-flex gap-2 mt-3">
+          <div class="w-100">
+            <label for="idadeDesmameInput">Peso de desmame</label>
+            <input class="form-control" type="number" id="idadeDesmameInput" name="idadeDesmameInput" step="any"
+              required />
+          </div>
+          <div class="w-100">
+            <label for="pesoAbateInput">Peso de abate</label>
+            <input class="form-control" type="number" id="pesoAbateInput" name="pesoAbateInput" step="any" required />
+          </div>
+        </div>
+
+        <div class="d-flex gap-2 mt-3">
+          <div class="w-100">
+            <label for="pesoMedioMatrizInput">Peso médio matriz</label>
+            <input class="form-control" type="number" id="pesoMedioMatrizInput" name="pesoMedioMatrizInput" step="any"
+              required />
+          </div>
+          <div class="w-100">
+            <label for="pesoMedioBorregaInput">Peso médio borrega de reposição</label>
+            <input class="form-control" type="number" id="pesoMedioBorregaInput" name="pesoMedioBorregaInput" step="any"
+              required />
+          </div>
+        </div>
+
+        <div class="w-100 mt-3">
+          <label for="pesoMedioReprodutorInput">Peso médio reprodutor</label>
+          <input class="form-control" type="number" id="pesoMedioReprodutorInput" name="pesoMedioReprodutorInput"
+            step="any" required />
+        </div>
+
+        <div class="d-flex gap-2 mt-3">
+          <div class="w-100">
+            <label for="descarteInput">% do descarte de matrizes</label>
+            <input class="form-control" type="number" id="descarteInput" name="descarteInput" step="any" required />
+          </div>
+          <div class="w-100">
+            <label for="crescimentoInput">Crescimento do rebanho</label>
+            <input class="form-control" type="number" id="crescimentoInput" name="crescimentoInput" step="any"
+              required />
+          </div>
+        </div>
+
+        <div class="d-flex gap-2 mt-3">
+          <div class="w-100">
+            <label for="custeioInput">% do custeio</label>
+            <input class="form-control" type="number" id="custeioInput" name="custeioInput" step="any" required />
+          </div>
+          <div class="w-100">
+            <label for="precoKgInput">Preço por Kg do borrego</label>
+            <input class="form-control" type="number" id="precoKgInput" name="precoKgInput" step="any" required />
+          </div>
+        </div>
+
+        <div class="w-100 mt-3">
+          <label for="custeioTotalInput">% do custeio total</label>
+          <input class="form-control" type="number" id="custeioTotalInput" name="custeioTotalInput" step="any"
+            required />
+        </div>
+
+        <h3 class="text-center mt-4">Consumo de matéria seca</h3>
+
+        <label for="FmateriaSecaInput" class="mt-3">Consumo de matéria seca Fêmeas (% do peso vivo) </label>
+        <input class="form-control" type="number" id="FmateriaSecaInput" name="FmateriaSecaInput" step="any" required />
+
+        <label for="MmateriaSecaInput" class="mt-3">Consumo de matéria seca Machos (% do peso vivo) </label>
+        <input class="form-control" type="number" id="MmateriaSecaInput" name="MmateriaSecaInput" step="any" required />
+
+        <label for="BmateriaSecaInput" class="mt-3">Consumo de matéria seca Borregos (%do peso vivo) </label>
+        <input class="form-control" type="number" id="BmateriaSecaInput" name="BmateriaSecaInput" step="any" required />
+
+        <label for="BA1materiaSecaInput" class="mt-3">Consumo de matéria seca para as borregas no período 1 (% do peso vivo) </label>
+        <input class="form-control" type="number" id="BA1materiaSecaInput" name="BA1materiaSecaInput" step="any"
+          required />
+
+        <label for="BA2materiaSecaInput" class="mt-3">Consumo de matéria seca para as borregas de reposição </label>
+        <input class="form-control" type="number" id="BA2materiaSecaInput" name="BA2materiaSecaInput" step="any"
+          required />
+
+          <h3 class="text-center mt-4">Dias suplementados</h3>
+
+        <label for="FdiasSuplementosInput" class="mt-3">Número de dias em que as fêmeas serão suplementadas </label>
+        <input class="form-control" type="number" id="FdiasSuplementosInput" name="FdiasSuplementosInput" step="any"
+          required />
+
+        <label for="MdiasSuplementosInput" class="mt-3">Números de dias em que os machos serão suplementados </label>
+        <input class="form-control" type="number" id="MdiasSuplementosInput" name="MdiasSuplementosInput" step="any"
+          required />
+
+        <label for="BdiasSuplementosInput" class="mt-3">Número de dias em que os borregos serão suplementados </label>
+        <input class="form-control" type="number" id="BdiasSuplementosInput" name="BdiasSuplementosInput" step="any"
+          required />
+
+        <label for="BA1diasSuplementosInput" class="mt-3">Número de dias em que as borregas serão suplementadas no período 1 </label>
+        <input class="form-control" type="number" id="BA1diasSuplementosInput" name="BA1diasSuplementosInput" step="any"
+          required />
+
+        <label for="BA2diasSuplementosInput" class="mt-3">Números de dias em que as borregas de reposição serão suplementadas
+        </label>
+        <input class="form-control" type="number" id="BA2diasSuplementosInput" name="BA2diasSuplementosInput" step="any"
+          required />
+
+          <h3 class="text-center mt-4">% de volumoso na dieta</h3>
+
+        <label for="FvolumosoInput" class="mt-3">% de volumoso na dieta das fêmeas </label>
+        <input class="form-control" type="number" id="FvolumosoInput" name="FvolumosoInput" step="any" required />
+
+        <label for="MvolumosoInput" class="mt-3">% de volumoso na dieta dos machos </label>
+        <input class="form-control" type="number" id="MvolumosoInput" name="MvolumosoInput" step="any" required />
+
+        <label for="BvolumosoInput" class="mt-3">% de volumoso na dieta dos borregos </label>
+        <input class="form-control" type="number" id="BvolumosoInput" name="BvolumosoInput" step="any" required />
+
+        <label for="BA1volumosoInput" class="mt-3">% de volumoso na dieta das borregas no período 1 </label>
+        <input class="form-control" type="number" id="BA1volumosoInput" name="BA1volumosoInput" step="any" required />
+
+        <label for="BA2volumosoInput" class="mt-3">% de volumoso na dieta das borregas no período 2 </label>
+        <input class="form-control" type="number" id="BA2volumosoInput" name="BA2volumosoInput" step="any" required />
+
+        <h3 class="text-center mt-4">% de matéria seca do volumoso</h3>
+
+        <label for="FmateriaSeca_volumosoInput" class="mt-3">% de matéria seca do volumoso na dieta das fêmeas</label>
+        <input class="form-control" type="number" id="FmateriaSeca_volumosoInput" name="FmateriaSeca_volumosoInput"
+          step="any" required />
+
+        <label for="MmateriaSeca_volumosoInput" class="mt-3">% de matéria seca do volumoso na dieta dos machos</label>
+        <input class="form-control" type="number" id="MmateriaSeca_volumosoInput" name="MmateriaSeca_volumosoInput"
+          step="any" required />
+
+        <label for="BmateriaSeca_volumosoInput" class="mt-3">% de matéria seca do volumoso na dieta dos borregos</label>
+        <input class="form-control" type="number" id="BmateriaSeca_volumosoInput" name="BmateriaSeca_volumosoInput"
+          step="any" required />
+
+        <label for="BA1materiaSeca_volumosoInput" class="mt-3">% de matéria seca do volumoso na dieta das borregas no período 1
+        </label>
+        <input class="form-control" type="number" id="BA1materiaSeca_volumosoInput" name="BA1materiaSeca_volumosoInput"
+          step="any" required />
+
+        <label for="BA2materiaSeca_volumosoInput" class="mt-3">% de matéria seca do volumoso na dieta das borregas de reposição
+        </label>
+        <input class="form-control" type="number" id="BA2materiaSeca_volumosoInput" name="BA2materiaSeca_volumosoInput"
+          step="any" required />
+
+          <h3 class="text-center mt-4">% de matéria seca do concentrado</h3>
+
+        <label for="FmateriaSeca_concentradoInput" class="mt-3">% de matéria seca do concentrado na dieta das fêmeas </label>
+        <input class="form-control" type="number" id="FmateriaSeca_concentradoInput"
+          name="FmateriaSeca_concentradoInput" step="any" required />
+
+        <label for="MmateriaSeca_concentradoInput" class="mt-3">% de matéria seca do concentrado na dieta dos machos </label>
+        <input class="form-control" type="number" id="MmateriaSeca_concentradoInput"
+          name="MmateriaSeca_concentradoInput" step="any" required />
+
+        <label for="BmateriaSeca_concentradoInput" class="mt-3">% de matéria seca do concentrado na dieta dos borregos </label>
+        <input class="form-control" type="number" id="BmateriaSeca_concentradoInput"
+          name="BmateriaSeca_concentradoInput" step="any" required />
+
+        <label for="BA1materiaSeca_concentradoInput" class="mt-3">% de matéria seca do concentrado na dieta das borregas no período 1
+        </label>
+        <input class="form-control" type="number" id="BA1materiaSeca_concentradoInput"
+          name="BA1materiaSeca_concentradoInput" step="any" required />
+
+        <label for="BA2materiaSeca_concentradoInput" class="mt-3">% de matéria seca do concentrado na dieta das borregas no período 2
+        </label>
+        <input class="form-control" type="number" id="BA2materiaSeca_concentradoInput"
+          name="BA2materiaSeca_concentradoInput" step="any" required />
+
+        <label for="anosSimuladosInput" class="mt-3">Quantidade de anos que serão simulados</label>
+        <input class="form-control" type="number" id="anosSimuladosInput" name="anosSimuladosInput" step="any"
+          required />
+
+        <div class="w-100 mt-3 text-center">
+          <button class="btn btn-warning px-5" type="submit">Enviar</button>
+        </div>
+
+
+      </form>
+    </div>
+  </section>
+
+  <!-- Rodapé -->
+  <footer class="pt-4 bg-light ">
+    <div class="footer-content ">
+      <img src="img/logos-ifce-cits.png" alt="" width="300px">
+      <img src="img/logos-gov-midr.png" alt="" width="350px">
+    </div>
+    <div class="footer-bottom">
+      &copy; 2024
+    </div>
+  </footer>
+
+
+  <script src="Index.js" type="Module"></script>
+</body>
+
+</html>
