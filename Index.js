@@ -1,5 +1,5 @@
 let perdas = [], perdas1Ano = [], reposicao = [], vendasM = [],
-  descartes = [], vendasF = [], Venda_Compra = 0, pesoM = [],
+  comprasM = [], descartes = [], vendasF = [], pesoM = [],
   pesoF = [], pesoT = [], femeasEUA = [], machosEUA = [], totalEUA = [],
   receita = [], custeioReal = [], totalReal = [], lucro = [];
 let maxfemeas = 0, fertilidade = 0, prolificidade = 0, partos_porAno = 0,
@@ -121,6 +121,7 @@ var PA = document.querySelectorAll(".perdas_1_ano");
 var D = document.querySelector("#descartes");
 var R = document.querySelector("#reposicao");
 var VM = document.querySelector("#venda_machos");
+var CM = document.querySelector("#compra_machos");
 var VF = document.querySelector("#venda_femeas");
 var CF = document.querySelector("#compra_femeas");
 var EM = document.querySelector("#machos_Final");
@@ -166,7 +167,8 @@ function calcularReposicao() {
 }
 
 function calcularVendas() {
-  vendasM.push(nascimentos[anoAtual] - perdas1Ano[anoAtual]);
+  vendasM.push(nascimentos[anoAtual] + machos[anoAtual] - perdas1Ano[anoAtual]);
+  comprasM.push(machos[anoAtual]);
   vendasF.push(nascimentos[anoAtual] - perdas1Ano[anoAtual] - reposicao[anoAtual]);
   mostrarVendas();
 }
@@ -178,7 +180,7 @@ function mostrarVendas() {
   } else if (vendasF[controlador] < 0){
     VF.textContent = "";
     CF.textContent = vendasF[controlador]*-1;
-  }
+  } 
 }
 
 function calcularEstoque() {
@@ -221,6 +223,7 @@ function avancar() {
     D.textContent = descartes[controlador];
     R.textContent = reposicao[controlador];
     VM.textContent = vendasM[controlador];
+    CM.textContent = comprasM[controlador];
     mostrarVendas();
     EM.textContent = machos[controlador];
     EF.textContent = femeas[controlador];
@@ -254,6 +257,7 @@ function retroceder() {
     D.textContent = descartes[controlador];
     R.textContent = reposicao[controlador];
     VM.textContent = vendasM[controlador];
+    CM.textContent = comprasM[controlador];
     mostrarVendas();
     EM.textContent = machos[controlador];
     EF.textContent = femeas[controlador];
@@ -291,6 +295,7 @@ function mostrarInformacoes() {
   R.textContent = reposicao[0];
   calcularVendas();
   VM.textContent = vendasM[0];
+  CM.textContent = comprasM[0];
   calcularEstoque();
   EM.textContent = machos[0];
   EF.textContent = femeasFinal[0];
