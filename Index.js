@@ -1,4 +1,4 @@
-let perdas = [], perdas1Ano = [], reposicao = [], vendasM = [],
+let perdas = [], perdas1Ano = [], reposicaoM = [],reposicaoF = [], vendasM = [],
   comprasM = [], descartes = [], vendasF = [], pesoM = [],
   pesoF = [], pesoT = [], femeasEUA = [], machosEUA = [], totalEUA = [],
   receita = [], custeioReal = [], totalReal = [], lucro = [];
@@ -119,14 +119,15 @@ var N = document.querySelectorAll(".nascimentos");
 var P = document.querySelector("#perdas");
 var PA = document.querySelectorAll(".perdas_1_ano");
 var D = document.querySelector("#descartes");
-var R = document.querySelector("#reposicao");
+var RF = document.querySelector("#reposicao-femeas");
+var RM = document.querySelector("#reposicao-machos");
 var VM = document.querySelector("#venda_machos");
 var CM = document.querySelector("#compra_machos");
 var VF = document.querySelector("#venda_femeas");
 var CF = document.querySelector("#compra_femeas");
 var EM = document.querySelector("#machos_Final");
 var EF = document.querySelector("#femeas_Final");
-var ER = document.querySelector("#reposicao_Final");
+var ER = document.querySelector("#reposicaoF_Final");
 var PM = document.querySelector("#peso_medioM");
 var PF = document.querySelector("#peso_medioF");
 var PT = document.querySelector("#peso_total");
@@ -139,8 +140,16 @@ var CT = document.querySelector("#custo_total");
 var L = document.querySelector("#lucro");
 var A = document.querySelectorAll(".ano_exibido");
 
-function calcularAquisicoes() {
-  machos.push(Math.ceil(femeas[anoAtual] / machos_femeas));
+function calcularReposicaoMachos() {
+  machos[anoAtual] = Math.ceil(femeas[anoAtual] / machos_femeas);
+  
+  if (machos[anoAtual] > machos[(anoAtual-1)]) {
+    reposicaoM[anoAtual] = machos[anoAtual] - machos[(anoAtual-1)];
+  } else{
+    reposicaoM[anoAtual] = 0;
+    RM.textContent = "";
+  }
+
 }
 
 function calcularNascimentos() {
@@ -156,20 +165,20 @@ function calcularDescartes() {
   descartes.push(Math.ceil(femeas[anoAtual] * (taxa_Descartes / 100)));
 }
 
-function calcularReposicao() {
+function calcularReposicaoFemeas() {
   if (femeas[anoAtual] + femeas[anoAtual] * (crescimento / 100) < maxfemeas) {
-    reposicao.push(Math.ceil(femeas[anoAtual] * (crescimento / 100) + perdas[anoAtual] + descartes[anoAtual]));
+    reposicaoF.push(Math.ceil(femeas[anoAtual] * (crescimento / 100) + perdas[anoAtual] + descartes[anoAtual]));
   } else if (femeas[anoAtual] + femeas[anoAtual] * (crescimento / 100) == maxfemeas) {
-    reposicao.push(perdas[anoAtual] + descartes[anoAtual]);
+    reposicaoF.push(perdas[anoAtual] + descartes[anoAtual]);
   } else {
-    reposicao.push((femeas[anoAtual] - perdas[anoAtual] - descartes[anoAtual] - maxfemeas) * -1);
+    reposicaoF.push((femeas[anoAtual] - perdas[anoAtual] - descartes[anoAtual] - maxfemeas) * -1);
   }
 }
 
 function calcularVendas() {
   vendasM.push(nascimentos[anoAtual] + machos[anoAtual] - perdas1Ano[anoAtual]);
-  comprasM.push(machos[anoAtual]);
-  vendasF.push(nascimentos[anoAtual] - perdas1Ano[anoAtual] - reposicao[anoAtual]);
+  comprasM.push(machos[anoAtual] - reposicaoM[anoAtual]);
+  vendasF.push(nascimentos[anoAtual] - perdas1Ano[anoAtual] - reposicaoF[anoAtual]);
   mostrarVendas();
 }
 
@@ -189,12 +198,12 @@ function calcularEstoque() {
 
 function calcularPeso() {
   pesoM.push(machos[anoAtual] * pesoMedioM);
-  pesoF.push(femeasFinal[anoAtual] * pesoMedioF + reposicao[anoAtual] * pesoMedioR);
+  pesoF.push(femeasFinal[anoAtual] * pesoMedioF + reposicaoF[anoAtual] * pesoMedioR);
   pesoT.push(pesoM[anoAtual] + pesoF[anoAtual])
 }
 
 function calcularEUA() {
-  femeasEUA.push((Math.pow(pesoMedioF, 0.75) / Math.pow(450, 0.75)) * femeasFinal[anoAtual] + (Math.pow(pesoMedioR, 0.75) / Math.pow(450, 0.75)) * reposicao[anoAtual]);
+  femeasEUA.push((Math.pow(pesoMedioF, 0.75) / Math.pow(450, 0.75)) * femeasFinal[anoAtual] + (Math.pow(pesoMedioR, 0.75) / Math.pow(450, 0.75)) * reposicaoF[anoAtual]);
   machosEUA.push((Math.pow(pesoMedioM, 0.75) / Math.pow(450, 0.75)) * machos[anoAtual]);
   totalEUA.push(femeasEUA[anoAtual] + machosEUA[anoAtual]);
 }
@@ -207,7 +216,7 @@ function calcularCusto() {
 }
 
 function atualizarRebanho() {
-  femeas.push(femeasFinal[anoAtual] + reposicao[anoAtual]);
+  femeas.push(femeasFinal[anoAtual] + reposicaoF[anoAtual]);
 }
 
 function avancar() {
@@ -221,13 +230,14 @@ function avancar() {
     PA[0].textContent = perdas1Ano[controlador];
     PA[1].textContent = perdas1Ano[controlador];
     D.textContent = descartes[controlador];
-    R.textContent = reposicao[controlador];
+    RF.textContent = reposicaoF[controlador];
+    RM.textContent = reposicaoM[controlador];
     VM.textContent = vendasM[controlador];
     CM.textContent = comprasM[controlador];
     mostrarVendas();
     EM.textContent = machos[controlador];
     EF.textContent = femeas[controlador];
-    ER.textContent = reposicao[controlador];
+    ER.textContent = reposicaoF[controlador];
     PM.textContent = pesoM[controlador].toFixed(2) + "Kg";
     PF.textContent = pesoF[controlador].toFixed(2) + "Kg";
     PT.textContent = pesoT[controlador].toFixed(2) + "Kg";
@@ -255,13 +265,14 @@ function retroceder() {
     PA[0].textContent = perdas1Ano[controlador];
     PA[1].textContent = perdas1Ano[controlador];
     D.textContent = descartes[controlador];
-    R.textContent = reposicao[controlador];
+    RF.textContent = reposicaoF[controlador];
+    RM.textContent = reposicaoM[controlador];
     VM.textContent = vendasM[controlador];
     CM.textContent = comprasM[controlador];
     mostrarVendas();
     EM.textContent = machos[controlador];
     EF.textContent = femeas[controlador];
-    ER.textContent = reposicao[controlador];
+    ER.textContent = reposicaoF[controlador];
     PM.textContent = pesoM[controlador].toFixed(2) + "Kg";
     PF.textContent = pesoF[controlador].toFixed(2) + "Kg";
     PT.textContent = pesoT[controlador].toFixed(2) + "Kg";
@@ -279,7 +290,7 @@ function retroceder() {
 }
 
 function mostrarInformacoes() {
-  calcularAquisicoes();
+  calcularReposicaoMachos();
   M.textContent = machos[0];
   F.textContent = femeas[0];
   calcularNascimentos();
@@ -291,15 +302,16 @@ function mostrarInformacoes() {
   PA[1].textContent = perdas1Ano[0];
   calcularDescartes();
   D.textContent = descartes[0];
-  calcularReposicao();
-  R.textContent = reposicao[0];
+  calcularReposicaoFemeas();
+  RF.textContent = reposicaoF[0];
+  RM.textContent = reposicaoM[0];
   calcularVendas();
   VM.textContent = vendasM[0];
   CM.textContent = comprasM[0];
   calcularEstoque();
   EM.textContent = machos[0];
   EF.textContent = femeasFinal[0];
-  ER.textContent = reposicao[0];
+  ER.textContent = reposicaoF[0];
   calcularPeso();
   PM.textContent = pesoM[0].toFixed(2) + "Kg";
   PF.textContent = pesoF[0].toFixed(2) + "Kg";
@@ -323,9 +335,9 @@ console.log("Rebanho: Macho: "+ machos[anoAtual] +" Fêmeas: "+ femeas[anoAtual]
 console.log("Nascimentos: Machos: "+ nascimentos[anoAtual] +" Fêmeas: "+ nascimentos[anoAtual]);
 console.log("Perdas: Adultos: Fêmeas: "+ perdas[anoAtual] +" Abaixo de 1 ano: M: "+ perdas1Ano[anoAtual] +" F: "+ perdas1Ano[anoAtual]);
 console.log("Descartes: "+ descartes[anoAtual]);
-console.log("Reposição das Fêmeas: "+ reposicao[anoAtual]);
+console.log("Reposição das Fêmeas: "+ reposicaoF[anoAtual]);
 console.log("Vendas: Macho: "+ vendasM[anoAtual] +" " mostrarVenda() +"Fêmeas: "+ Venda_Compra);
-console.log("Estoque Final: Macho: "+ machos[anoAtual] +" Fêmeas: "+ femeas[anoAtual] +" Fêmeas Abaixo de 1 ano: "+ reposicao[anoAtual]);
+console.log("Estoque Final: Macho: "+ machos[anoAtual] +" Fêmeas: "+ femeas[anoAtual] +" Fêmeas Abaixo de 1 ano: "+ reposicaoF[anoAtual]);
 console.log("Peso Médio: Macho: "+ pesoM[anoAtual].toFixed(2) +"Kg Fêmeas: "+ pesoF[anoAtual].toFixed(2) +"Kg");
 console.log("E.U.A Machos: "+ machosEUA[anoAtual].toFixed(2) +" E.U.A Fêmeas: "+ femeasEUA[anoAtual].toFixed(2) +" Total: "+ totalEUA[anoAtual].toFixed(2));
 console.log("Receita: R$"+ receita[anoAtual].toFixed(2) +" Custo em real: R$"+ custeioReal[anoAtual].toFixed(2));
