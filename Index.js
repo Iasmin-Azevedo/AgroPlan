@@ -176,8 +176,8 @@ function calcularReposicaoFemeas() {
 }
 
 function calcularVendas() {
-  vendasM.push(nascimentos[anoAtual] + machos[anoAtual] - perdas1Ano[anoAtual]);
-  comprasM.push(machos[anoAtual] - reposicaoM[anoAtual]);
+  vendasM.push((nascimentos[anoAtual] - perdas1Ano[anoAtual]) + machos[anoAtual]);
+  comprasM.push(reposicaoM[anoAtual]);
   vendasF.push(nascimentos[anoAtual] - perdas1Ano[anoAtual] - reposicaoF[anoAtual]);
   mostrarVendas();
 }
