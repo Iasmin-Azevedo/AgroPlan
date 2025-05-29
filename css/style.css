@@ -65,6 +65,10 @@ footer .footer-bottom {
     min-height: 80vh;
 }
 
+.h-r p {
+    text-align: justify;
+}
+
 .h-full {
     min-height: 100vh;
 }
