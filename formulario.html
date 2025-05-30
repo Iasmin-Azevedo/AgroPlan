@@ -77,6 +77,11 @@
             <label for="partosPorAnoInput">Partos por ano</label>
             <input class="form-control" type="number" id="partosPorAnoInput" name="partosPorAnoInput" step="any"
               required />
+            <span tabindex="0" class="text-success ms-1" data-bs-toggle="popover" data-bs-trigger="focus"Add commentMore actions
+              data-bs-container="body" title="Ajuda"
+              data-bs-content="Número médio de partos que cada fêmea tem por ano.">
+              <i class="bi bi-question-circle-fill" style="cursor: pointer;"></i>
+            </span>
           </div>
           <div class="w-100">
             <label for="prolificidadeInput">Prolificidade</label>
@@ -204,7 +209,16 @@
           </div>
         </div>
 
-       
+        <div class="d-flex gap-2 mt-3">
+          <div class="w-100">
+            <label for="custeioInput">% do custeio</label>
+            <span tabindex="0" class="text-success ms-1" data-bs-toggle="popover" data-bs-trigger="focus"
+              data-bs-container="body" title="Ajuda"
+              data-bs-content="Percentual dos custos totais que serão considerados para a simulação.">
+              <i class="bi bi-question-circle-fill" style="cursor: pointer;"></i>
+            </span>
+            <input class="form-control" type="number" id="custeioInput" name="custeioInput" step="any" required />
+          </div>
           <div class="w-100">
             <label for="precoKgInput">Preço por Kg de animal</label>
             <span tabindex="0" class="text-success ms-1" data-bs-toggle="popover" data-bs-trigger="focus"
@@ -214,7 +228,18 @@
             </span>
             <input class="form-control" type="number" id="precoKgInput" name="precoKgInput" step="any" required />
           </div>
-        
+        </div>
+
+        <div class="w-100 mt-3">
+          <label for="custeioTotalInput">% do custeio total</label>
+          <span tabindex="0" class="text-success ms-1" data-bs-toggle="popover" data-bs-trigger="focus"
+              data-bs-container="body" title="Ajuda"
+              data-bs-content="Percentual do custo total referente ao custeio operacional do rebanho.">
+              <i class="bi bi-question-circle-fill" style="cursor: pointer;"></i>
+            </span>
+          <input class="form-control" type="number" id="custeioTotalInput" name="custeioTotalInput" step="any"
+            required />
+        </div>
 
         <h3 class="text-center mt-4">Consumo de matéria seca</h3>
 
