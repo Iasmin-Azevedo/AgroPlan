@@ -18,7 +18,7 @@
     <div class="container-fluid container color-r">
       <a class="navbar-brand fw-bold" href="index.html">
         <img src="img/rebanhologo.png" alt="Bode" width="50px">
-        AGROPLAN
+        PLANEJA TEC
 
         <!-- Rebanho -->
       </a>
@@ -46,7 +46,7 @@
             <label for="femaleInput" class="mb-0">Fêmeas Iniciais</label>
             <span tabindex="0" class="text-success ms-1" data-bs-toggle="popover" data-bs-trigger="focus"
               data-bs-container="body" title="Ajuda"
-              data-bs-content="Informe o número de fêmeas disponíveis no início do ciclo.">
+              data-bs-content="Informe o número de fêmeas disponíveis no início do projeto.">
               <i class="bi bi-question-circle-fill" style="cursor: pointer;"></i>
             </span>
             <input class="form-control mt-1" type="number" id="femaleInput" name="femaleInput" step="any" required />
@@ -56,7 +56,7 @@
             <label for="maxFemaleInput">Máximo de fêmeas</label>
             <span tabindex="0" class="text-success ms-1" data-bs-toggle="popover" data-bs-trigger="focus"
               data-bs-container="body" title="Ajuda"
-              data-bs-content="Número máximo permitido de fêmeas que o rebanho pode atingir.">
+              data-bs-content="Número máximo de fêmeas que você pretende chegar.">
               <i class="bi bi-question-circle-fill" style="cursor: pointer;"></i>
             </span>
             <input class="form-control" type="number" id="maxFemaleInput" name="maxFemaleInput" step="any" required />
@@ -65,7 +65,7 @@
             <label for="maleFemaleInput">Fêmea : Macho</label>
             <span tabindex="0" class="text-success ms-1" data-bs-toggle="popover" data-bs-trigger="focus"
               data-bs-container="body" title="Ajuda"
-              data-bs-content="Proporção entre o número de fêmeas e machos no rebanho (exemplo: 3:1).">
+              data-bs-content="Quantidade de fêmeas para cada reprodutor (exemplo: 3:1).">
               <i class="bi bi-question-circle-fill" style="cursor: pointer;"></i>
             </span>
             <input class="form-control" type="number" id="maleFemaleInput" name="maleFemaleInput" step="any" required />
@@ -75,29 +75,25 @@
         <div class="d-flex gap-2 mt-3">
           <div class="w-100">
             <label for="partosPorAnoInput">Partos por ano</label>
-            <span tabindex="0" class="text-success ms-1" data-bs-toggle="popover" data-bs-trigger="focus"
-              data-bs-container="body" title="Ajuda"
-              data-bs-content="Número médio de partos que cada fêmea tem por ano.">
-              <i class="bi bi-question-circle-fill" style="cursor: pointer;"></i>
             </span>
             <input class="form-control" type="number" id="partosPorAnoInput" name="partosPorAnoInput" step="any"
               required />
           </div>
           <div class="w-100">
-            <label for="prolificidadeInput">Média de Prolificidade</label>
+            <label for="prolificidadeInput">Prolificidade</label>
             <span tabindex="0" class="text-success ms-1" data-bs-toggle="popover" data-bs-trigger="focus"
               data-bs-container="body" title="Ajuda"
-              data-bs-content="Número médio de filhotes nascidos por parto.">
+              data-bs-content="Número médio de crias por matriz por parto.">
               <i class="bi bi-question-circle-fill" style="cursor: pointer;"></i>
             </span>
             <input class="form-control" type="number" id="prolificidadeInput" name="prolificidadeInput" step="any"
               required />
           </div>
           <div class="w-100">
-            <label for="fertilidadeInput">% Fértil</label>
+            <label for="fertilidadeInput">Fertilidade</label>
             <span tabindex="0" class="text-success ms-1" data-bs-toggle="popover" data-bs-trigger="focus"
               data-bs-container="body" title="Ajuda"
-              data-bs-content="Percentual de fêmeas que realmente concebem após a estação de reprodução.">
+              data-bs-content="Percentual de fêmeas cobertas e prenhas durante a estação de monta.">
               <i class="bi bi-question-circle-fill" style="cursor: pointer;"></i>
             </span>
             <input class="form-control" type="number" id="fertilidadeInput" name="fertilidadeInput" step="any"
@@ -136,7 +132,7 @@
             <label for="idadeDesmameInput">Peso médio ao desmame</label>
             <span tabindex="0" class="text-success ms-1" data-bs-toggle="popover" data-bs-trigger="focus"
               data-bs-container="body" title="Ajuda"
-              data-bs-content="Peso médio dos filhotes no momento do desmame.">
+              data-bs-content="Peso médio das crias no momento do desmame.">
               <i class="bi bi-question-circle-fill" style="cursor: pointer;"></i>
             </span>
             <input class="form-control" type="number" id="idadeDesmameInput" name="idadeDesmameInput" step="any"
@@ -192,7 +188,7 @@
             <label for="descarteInput">% do descarte de matrizes</label>
             <span tabindex="0" class="text-success ms-1" data-bs-toggle="popover" data-bs-trigger="focus"
               data-bs-container="body" title="Ajuda"
-              data-bs-content="Percentual anual de fêmeas que são retiradas do rebanho por motivos como idade ou produtividade.">
+              data-bs-content="Percentual anual de fêmeas que serão descartadas do rebanho.">
               <i class="bi bi-question-circle-fill" style="cursor: pointer;"></i>
             </span>
             <input class="form-control" type="number" id="descarteInput" name="descarteInput" step="any" required />
@@ -201,7 +197,7 @@
             <label for="crescimentoInput">% Crescimento do rebanho</label>
             <span tabindex="0" class="text-success ms-1" data-bs-toggle="popover" data-bs-trigger="focus"
               data-bs-container="body" title="Ajuda"
-              data-bs-content="Taxa de crescimento anual do número total de animais do rebanho.">
+              data-bs-content="Taxa de crescimento anual desejada para o total de animais do rebanho.">
               <i class="bi bi-question-circle-fill" style="cursor: pointer;"></i>
             </span>
             <input class="form-control" type="number" id="crescimentoInput" name="crescimentoInput" step="any"
@@ -210,7 +206,7 @@
         </div>
 
         <div class="d-flex gap-2 mt-3">
-          <div class="w-100">
+          <!-- <div class="w-100">
             <label for="custeioInput">% do custeio</label>
             <span tabindex="0" class="text-success ms-1" data-bs-toggle="popover" data-bs-trigger="focus"
               data-bs-container="body" title="Ajuda"
@@ -218,9 +214,9 @@
               <i class="bi bi-question-circle-fill" style="cursor: pointer;"></i>
             </span>
             <input class="form-control" type="number" id="custeioInput" name="custeioInput" step="any" required />
-          </div>
+          </div> -->
           <div class="w-100">
-            <label for="precoKgInput">Preço por Kg do borrego</label>
+            <label for="precoKgInput">Preço por Kg de animal</label>
             <span tabindex="0" class="text-success ms-1" data-bs-toggle="popover" data-bs-trigger="focus"
               data-bs-container="body" title="Ajuda"
               data-bs-content="Preço médio recebido por quilograma de borrego vendido.">
@@ -230,7 +226,7 @@
           </div>
         </div>
 
-        <div class="w-100 mt-3">
+        <!-- <div class="w-100 mt-3">
           <label for="custeioTotalInput">% do custeio total</label>
           <span tabindex="0" class="text-success ms-1" data-bs-toggle="popover" data-bs-trigger="focus"
               data-bs-container="body" title="Ajuda"
@@ -239,27 +235,27 @@
             </span>
           <input class="form-control" type="number" id="custeioTotalInput" name="custeioTotalInput" step="any"
             required />
-        </div>
+        </div> -->
 
         <h3 class="text-center mt-4">Consumo de matéria seca</h3>
 
-        <label for="FmateriaSecaInput" class="mt-3">Consumo de matéria seca Fêmeas (% do peso vivo) </label>
+        <label for="FmateriaSecaInput" class="mt-3">Consumo de matéria seca das matrizes (% do peso vivo) </label>
         <span tabindex="0" class="text-success ms-1" data-bs-toggle="popover" data-bs-trigger="focus"
               data-bs-container="body" title="Ajuda"
-              data-bs-content="Percentual do peso vivo que as fêmeas consomem em matéria seca diariamente.">
+              data-bs-content="Percentual do peso vivo que as matrizes consomem em matéria seca diariamente.">
               <i class="bi bi-question-circle-fill" style="cursor: pointer;"></i>
             </span>
         <input class="form-control" type="number" id="FmateriaSecaInput" name="FmateriaSecaInput" step="any" required />
 
-        <label for="MmateriaSecaInput" class="mt-3">Consumo de matéria seca Machos (% do peso vivo) </label>
+        <label for="MmateriaSecaInput" class="mt-3">Consumo de matéria seca dos reprodutores (% do peso vivo) </label>
         <span tabindex="0" class="text-success ms-1" data-bs-toggle="popover" data-bs-trigger="focus"
               data-bs-container="body" title="Ajuda"
-              data-bs-content="Percentual do peso vivo que os machos consomem em matéria seca diariamente.">
+              data-bs-content="Percentual do peso vivo que os reprodutores consomem em matéria seca diariamente.">
               <i class="bi bi-question-circle-fill" style="cursor: pointer;"></i>
             </span>
         <input class="form-control" type="number" id="MmateriaSecaInput" name="MmateriaSecaInput" step="any" required />
 
-        <label for="BmateriaSecaInput" class="mt-3">Consumo de matéria seca Borregos (%do peso vivo) </label>
+        <label for="BmateriaSecaInput" class="mt-3">Consumo de matéria seca dos borregos (% do peso vivo) </label>
         <span tabindex="0" class="text-success ms-1" data-bs-toggle="popover" data-bs-trigger="focus"
               data-bs-container="body" title="Ajuda"
               data-bs-content="Percentual do peso vivo que os borregos consomem em matéria seca diariamente.">
