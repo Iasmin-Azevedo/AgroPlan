@@ -135,9 +135,9 @@ var EUAM = document.querySelector("#EUA_machos");
 var EUAF = document.querySelector("#EUA_femeas");
 var EUAT = document.querySelector("#EUA_total");
 var RE = document.querySelector("#receita");
-var C = document.querySelector("#custo");
-var CT = document.querySelector("#custo_total");
-var L = document.querySelector("#lucro");
+// var C = document.querySelector("#custo");
+// var CT = document.querySelector("#custo_total");
+// var L = document.querySelector("#lucro");
 var A = document.querySelectorAll(".ano_exibido");
 
 function calcularReposicaoMachos() {
@@ -210,9 +210,9 @@ function calcularEUA() {
 
 function calcularCusto() {
   receita.push(vendasM[anoAtual] * peso_abate * preco_kg + vendasF[anoAtual] * peso_abate * preco_kg);
-  custeioReal.push(receita[anoAtual] * (custeio / 100));
-  totalReal.push(receita[anoAtual] * (custeioTotal / 100));
-  lucro.push(receita[anoAtual] - totalReal[anoAtual]);
+  // custeioReal.push(receita[anoAtual] * (custeio / 100));
+  // totalReal.push(receita[anoAtual] * (custeioTotal / 100));
+  // lucro.push(receita[anoAtual] - totalReal[anoAtual]);
 }
 
 function atualizarRebanho() {
@@ -245,9 +245,9 @@ function avancar() {
     EUAF.textContent = femeasEUA[controlador].toFixed(2);
     EUAT.textContent = totalEUA[controlador].toFixed(2);
     RE.textContent = "R$" + receita[controlador].toFixed(2);
-    C.textContent = "R$" + custeioReal[controlador].toFixed(2);
-    CT.textContent = "R$" + totalReal[controlador].toFixed(2);
-    L.textContent = "R$" + lucro[controlador].toFixed(2);
+    // C.textContent = "R$" + custeioReal[controlador].toFixed(2);
+    // CT.textContent = "R$" + totalReal[controlador].toFixed(2);
+    // L.textContent = "R$" + lucro[controlador].toFixed(2);
     A[0].textContent = "Ano "+ (controlador+1);
     A[1].textContent = "Ano "+ (controlador+1);
     atualizarTabela();
@@ -280,9 +280,9 @@ function retroceder() {
     EUAF.textContent = femeasEUA[controlador].toFixed(2);
     EUAT.textContent = totalEUA[controlador].toFixed(2);
     RE.textContent = "R$" + receita[controlador].toFixed(2);
-    C.textContent = "R$" + custeioReal[controlador].toFixed(2);
-    CT.textContent = "R$" + totalReal[controlador].toFixed(2);
-    L.textContent = "R$" + lucro[controlador].toFixed(2);
+    // C.textContent = "R$" + custeioReal[controlador].toFixed(2);
+    // CT.textContent = "R$" + totalReal[controlador].toFixed(2);
+    // L.textContent = "R$" + lucro[controlador].toFixed(2);
     A[0].textContent = "Ano "+ (controlador+1);
     A[1].textContent = "Ano "+ (controlador+1);
     atualizarTabela();
@@ -322,9 +322,9 @@ function mostrarInformacoes() {
   EUAT.textContent = totalEUA[0].toFixed(2);
   calcularCusto();
   RE.textContent = "R$" + receita[0].toFixed(2);
-  C.textContent = "R$" + custeioReal[0].toFixed(2);
-  CT.textContent = "R$" + totalReal[0].toFixed(2);
-  L.textContent = "R$" + lucro[0].toFixed(2);
+  // C.textContent = "R$" + custeioReal[0].toFixed(2);
+  // CT.textContent = "R$" + totalReal[0].toFixed(2);
+  // L.textContent = "R$" + lucro[0].toFixed(2);
   A[0].textContent = "Ano "+ (controlador+1);
   A[1].textContent = "Ano "+ (controlador+1);
   atualizarRebanho();
