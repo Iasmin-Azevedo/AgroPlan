@@ -203,7 +203,16 @@
               required />
           </div>
         </div>
-
+        <div class="d-flex gap-2 mt-3">
+          <div class="w-100">
+            <label for="custeioInput">% do custeio</label>
+            <span tabindex="0" class="text-success ms-1" data-bs-toggle="popover" data-bs-trigger="focus"
+              data-bs-container="body" title="Ajuda"
+              data-bs-content="Percentual dos custos totais que serão considerados para a simulação.">
+              <i class="bi bi-question-circle-fill" style="cursor: pointer;"></i>
+            </span>
+            <input class="form-control" type="number" id="custeioInput" name="custeioInput" step="any" required />
+          </div>
        
           <div class="w-100">
             <label for="precoKgInput">Preço por Kg de animal</label>
