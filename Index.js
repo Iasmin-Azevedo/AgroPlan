@@ -1,19 +1,76 @@
-let perdas = [], perdas1Ano = [], reposicaoM = [],reposicaoF = [], vendasM = [],
-  comprasM = [], descartes = [], vendasF = [], pesoM = [],
-  pesoF = [], pesoT = [], femeasEUA = [], machosEUA = [], totalEUA = [],
-  receita = [], custeioReal = [], totalReal = [], lucro = [];
-let maxfemeas = 0, fertilidade = 0, prolificidade = 0, partos_porAno = 0,
-  taxa_Descartes = 0, custeio = 0, custeioTotal = 0, preco_kg = 0,
-  crescimento = 0, machos_femeas = 0, mortalidade = 0, mortalidade_1Ano = 0;
-export let femeas = [], machos = [], femeasFinal = [], nascimentos = [], pesoMedioM = 0, pesoMedioF = 0,
-  pesoMedioR = 0, idade_desmame = 0, peso_abate = 0,
-  femeas_materiaSeca, machos_materiaSeca, borregos_materiaSeca, borregas_materiaSeca1, borregas_materiaSeca2,
-  femeas_diasSuplementos, machos_diasSuplementos, borregos_diasSuplementos, borregas_diasSuplementos1, borregas_diasSuplementos2,
-  Fvolumoso, Mvolumoso, Bvolumoso, BA1volumoso, BA2volumoso,
-  FmateriaSeca_volumoso, MmateriaSeca_volumoso, BmateriaSeca_volumoso, BA1materiaSeca_volumoso, BA2materiaSeca_volumoso, 
-  FmateriaSeca_concentrado, MmateriaSeca_concentrado, BmateriaSeca_concentrado, BA1materiaSeca_concentrado, BA2materiaSeca_concentrado,
-  anoAtual = 0, controlador = 0, numAnos = 0;
-import { calcularInformacoes, atualizarTabela } from './Add.js';
+export const dados = {
+  quantidade: { machos: [], femeas: [] },
+  nascimentos: { machos: [], femeas: [], total: [] },
+  perdas: { femeas: [], borregos: [], borregas: [] },
+  descartes: { femeas: [] },
+  reposicao: { machos: [], borregas: [] },
+  vendas: { borregos:[], borregas:[] },
+  compras: { borregos:[], borregas:[] },
+  estoqueFinal: { machos: [], femeas: [], borregas: [] }, //machos e borregas não usados
+  peso: { machos: [], femeas: [], total: [] },
+  Eua: { machos: [], femeas: [], total: [] },
+  receita: [],
+};
+
+export const parametros = {
+  maxFemeas: 0,
+  machosPorFemeas: 0,
+  partosPorAno: 0,
+  prolificidade: 0,
+  fertilidade: 0,
+  mortalidadeAbaixoDe1Ano: 0,
+  mortalidadeAcimaDe1Ano: 0,
+  idadeDesmame: 0,
+  pesoAbate: 0,
+  pesoMedio: { machos: 0, femeas: 0, borregas: 0 },
+  taxaDescartes: 0,
+  crescimento: 0,
+  precoKg: 0,
+  custeio: 0,
+  custeioTotal: 0,
+};
+
+export const suplementos = {
+  materiaSeca: {
+    femeas: 0,
+    machos: 0,
+    borregos: 0,
+    borregas1: 0,
+    borregas2: 0
+  },
+  diasSuplementos: {
+    femeas: 0,
+    machos: 0,
+    borregos: 0,
+    borregas1: 0,
+    borregas2: 0
+  },
+  volumoso: {
+    femeas: 0,
+    machos: 0,
+    borregos: 0,
+    borregas1: 0,
+    borregas2: 0
+  },
+  materiaSecaVolumoso: {
+    femeas: 0,
+    machos: 0,
+    borregos: 0,
+    borregas1: 0,
+    borregas2: 0
+  },
+  materiaSecaConcentrado: {
+    femeas: 0,
+    machos: 0,
+    borregos: 0,
+    borregas1: 0,
+    borregas2: 0
+  }
+};
+
+export let anoAtual = 0, controlador = 0, numAnos = 0;
+
+import { calcularInformacoes } from './Add.js';
 
 // script.js
 
@@ -44,51 +101,51 @@ document.addEventListener('DOMContentLoaded', function() {
       const formValues = JSON.parse(localStorage.getItem('formValues'));
 
       // Convertendo os valores de texto para números e realizando o cálculo
-      femeas.push(parseFloat(formValues.femaleInput));
-      maxfemeas = parseFloat(formValues.maxFemaleInput);
-      machos_femeas = parseFloat(formValues.maleFemaleInput);
-      partos_porAno = parseFloat(formValues.partosPorAnoInput);
-      prolificidade = parseFloat(formValues.prolificidadeInput);
-      fertilidade = parseFloat(formValues.fertilidadeInput);
-      mortalidade_1Ano = parseFloat(formValues.mortalidade1AnoInput);
-      mortalidade = parseFloat(formValues.mortalidadeInput);
-      idade_desmame = parseFloat(formValues.idadeDesmameInput);
-      peso_abate = parseFloat(formValues.pesoAbateInput);
-      pesoMedioF = parseFloat(formValues.pesoMedioMatrizInput);
-      pesoMedioR = parseFloat(formValues.pesoMedioBorregaInput);
-      pesoMedioM = parseFloat(formValues.pesoMedioReprodutorInput);
-      taxa_Descartes = parseFloat(formValues.descarteInput);
-      crescimento = parseFloat(formValues.crescimentoInput);
-      preco_kg = parseFloat(formValues.precoKgInput);
-      custeio = parseFloat(formValues.custeioInput);
-      custeioTotal = parseFloat(formValues.custeioTotalInput);
+      dados.quantidade.femeas.push(parseFloat(formValues.femaleInput));
+      parametros.maxFemeas = parseFloat(formValues.maxFemaleInput);
+      parametros.machosPorFemeas = parseFloat(formValues.maleFemaleInput);
+      parametros.partosPorAno = parseFloat(formValues.partosPorAnoInput);
+      parametros.prolificidade = parseFloat(formValues.prolificidadeInput);
+      parametros.fertilidade = parseFloat(formValues.fertilidadeInput);
+      parametros.mortalidadeAbaixoDe1Ano = parseFloat(formValues.mortalidade1AnoInput);
+      parametros.mortalidadeAcimaDe1Ano = parseFloat(formValues.mortalidadeInput);
+      parametros.idadeDesmame = parseFloat(formValues.idadeDesmameInput);
+      parametros.pesoAbate = parseFloat(formValues.pesoAbateInput);
+      parametros.pesoMedio.machos = parseFloat(formValues.pesoMedioReprodutorInput);
+      parametros.pesoMedio.femeas = parseFloat(formValues.pesoMedioMatrizInput);
+      parametros.pesoMedio.borregas = parseFloat(formValues.pesoMedioBorregaInput);
+      parametros.taxaDescartes = parseFloat(formValues.descarteInput);
+      parametros.crescimento = parseFloat(formValues.crescimentoInput);
+      parametros.precoKg = parseFloat(formValues.precoKgInput);
+      parametros.custeio = parseFloat(formValues.custeioInput);
+      parametros.custeioTotal = parseFloat(formValues.custeioTotalInput);
       numAnos = parseFloat(formValues.anosSimuladosInput);
 
-      femeas_materiaSeca = parseFloat(formValues.FmateriaSecaInput) / 100;
-      machos_materiaSeca = parseFloat(formValues.MmateriaSecaInput) / 100;
-      borregos_materiaSeca = parseFloat(formValues.BmateriaSecaInput) / 100;
-      borregas_materiaSeca1 = parseFloat(formValues.BA1materiaSecaInput) / 100;
-      borregas_materiaSeca2 = parseFloat(formValues.BA2materiaSecaInput) / 100;
-      femeas_diasSuplementos = parseFloat(formValues.FdiasSuplementosInput);
-      machos_diasSuplementos = parseFloat(formValues.MdiasSuplementosInput);
-      borregos_diasSuplementos = parseFloat(formValues.BdiasSuplementosInput);
-      borregas_diasSuplementos1 = parseFloat(formValues.BA1diasSuplementosInput);
-      borregas_diasSuplementos2 = parseFloat(formValues.BA2diasSuplementosInput);
-      Fvolumoso = parseFloat(formValues.FvolumosoInput) / 100;
-      Mvolumoso = parseFloat(formValues.MvolumosoInput) / 100;
-      Bvolumoso = parseFloat(formValues.BvolumosoInput) / 100;
-      BA1volumoso = parseFloat(formValues.BA1volumosoInput) / 100;
-      BA2volumoso = parseFloat(formValues.BA2volumosoInput) / 100;
-      FmateriaSeca_volumoso = parseFloat(formValues.FmateriaSeca_volumosoInput) / 100;
-      MmateriaSeca_volumoso = parseFloat(formValues.MmateriaSeca_volumosoInput) / 100;
-      BmateriaSeca_volumoso = parseFloat(formValues.BmateriaSeca_volumosoInput) / 100;
-      BA1materiaSeca_volumoso = parseFloat(formValues.BA1materiaSeca_volumosoInput) / 100;
-      BA2materiaSeca_volumoso = parseFloat(formValues.BA2materiaSeca_volumosoInput) / 100;
-      FmateriaSeca_concentrado = parseFloat(formValues.FmateriaSeca_concentradoInput) / 100;
-      MmateriaSeca_concentrado = parseFloat(formValues.MmateriaSeca_concentradoInput) / 100;
-      BmateriaSeca_concentrado = parseFloat(formValues.BmateriaSeca_concentradoInput) / 100;
-      BA1materiaSeca_concentrado = parseFloat(formValues.BA1materiaSeca_concentradoInput) / 100;
-      BA2materiaSeca_concentrado = parseFloat(formValues.BA2materiaSeca_concentradoInput) / 100;
+      suplementos.materiaSeca.femeas = parseFloat(formValues.FmateriaSecaInput) / 100;
+      suplementos.materiaSeca.machos = parseFloat(formValues.MmateriaSecaInput) / 100;
+      suplementos.materiaSeca.borregos = parseFloat(formValues.BmateriaSecaInput) / 100;
+      suplementos.materiaSeca.borregas1 = parseFloat(formValues.BA1materiaSecaInput) / 100;
+      suplementos.materiaSeca.borregas2 = parseFloat(formValues.BA2materiaSecaInput) / 100;
+      suplementos.diasSuplementos.femeas = parseFloat(formValues.FdiasSuplementosInput);
+      suplementos.diasSuplementos.machos = parseFloat(formValues.MdiasSuplementosInput);
+      suplementos.diasSuplementos.borregos = parseFloat(formValues.BdiasSuplementosInput);
+      suplementos.diasSuplementos.borregas1 = parseFloat(formValues.BA1diasSuplementosInput);
+      suplementos.diasSuplementos.borregas2 = parseFloat(formValues.BA2diasSuplementosInput);
+      suplementos.volumoso.femeas = parseFloat(formValues.FvolumosoInput) / 100;
+      suplementos.volumoso.machos = parseFloat(formValues.MvolumosoInput) / 100;
+      suplementos.volumoso.borregos = parseFloat(formValues.BvolumosoInput) / 100;
+      suplementos.volumoso.borregas1 = parseFloat(formValues.BA1volumosoInput) / 100;
+      suplementos.volumoso.borregas2 = parseFloat(formValues.BA2volumosoInput) / 100;
+      suplementos.materiaSecaVolumoso.femeas = parseFloat(formValues.FmateriaSeca_volumosoInput) / 100;
+      suplementos.materiaSecaVolumoso.machos = parseFloat(formValues.MmateriaSeca_volumosoInput) / 100;
+      suplementos.materiaSecaVolumoso.borregos = parseFloat(formValues.BmateriaSeca_volumosoInput) / 100;
+      suplementos.materiaSecaVolumoso.borregas1 = parseFloat(formValues.BA1materiaSeca_volumosoInput) / 100;
+      suplementos.materiaSecaVolumoso.borregas2 = parseFloat(formValues.BA2materiaSeca_volumosoInput) / 100;
+      suplementos.materiaSecaConcentrado.femeas = parseFloat(formValues.FmateriaSeca_concentradoInput) / 100;
+      suplementos.materiaSecaConcentrado.machos = parseFloat(formValues.MmateriaSeca_concentradoInput) / 100;
+      suplementos.materiaSecaConcentrado.borregos = parseFloat(formValues.BmateriaSeca_concentradoInput) / 100;
+      suplementos.materiaSecaConcentrado.borregas1 = parseFloat(formValues.BA1materiaSeca_concentradoInput) / 100;
+      suplementos.materiaSecaConcentrado.borregas2 = parseFloat(formValues.BA2materiaSeca_concentradoInput) / 100;
 
       // Exibindo o resultado
       while (anoAtual < numAnos) {
@@ -98,18 +155,38 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
       const botaoRetroceder = document.getElementById('retroceder');
-
-      botaoRetroceder.addEventListener('click', function(event){
-        event.preventDefault();
-        retroceder();
-      });
+      if (botaoRetroceder) {
+        botaoRetroceder.addEventListener('click', function(event){
+          event.preventDefault();
+          if (controlador > 0) {
+            controlador--;
+            mostrarInformacoes();
+            calcularInformacoes()
+            console.log(`Ano ${controlador + 1}`);
+            console.log('Fêmeas:', dados.quantidade.femeas[controlador]);
+            console.log('Max fêmeas:', parametros.maxFemeas);
+            console.log('Reprodução:', dados.nascimentos.femeas[controlador]);
+            console.log('Descarte:', dados.descartes.femeas[controlador]);
+          }
+        });
+      }
 
       const botaoAvancar = document.getElementById('avancar');
-
-      botaoAvancar.addEventListener('click', function(event){
-        event.preventDefault();
-        avancar();
-      });
+      if (botaoAvancar) {
+        botaoAvancar.addEventListener('click', function(event){
+          event.preventDefault();
+          if (controlador + 1 < dados.quantidade.femeas.length) {
+            controlador++;
+            mostrarInformacoes();
+            calcularInformacoes()
+            console.log(`Ano ${controlador + 1}`);
+            console.log('Fêmeas:', dados.quantidade.femeas[controlador]);
+            console.log('Max fêmeas:', parametros.maxFemeas);
+            console.log('Reprodução:', dados.nascimentos.femeas[controlador]);
+            console.log('Descarte:', dados.descartes.femeas[controlador]);
+          }
+        });
+      }
   }
 });
 
@@ -141,187 +218,122 @@ var RE = document.querySelector("#receita");
 var A = document.querySelectorAll(".ano_exibido");
 
 function calcularReposicaoMachos() {
-  machos[anoAtual] = Math.ceil(femeas[anoAtual] / machos_femeas);
+  dados.quantidade.machos[anoAtual] = Math.ceil(dados.quantidade.femeas[anoAtual] / parametros.machosPorFemeas);
   
-  if (machos[anoAtual] > machos[(anoAtual-1)]) {
-    reposicaoM[anoAtual] = machos[anoAtual] - machos[(anoAtual-1)];
+  if (dados.quantidade.machos[anoAtual] > dados.quantidade.machos[(anoAtual-1)]) {
+    dados.reposicao.machos[anoAtual] = dados.quantidade.machos[anoAtual] - dados.quantidade.machos[(anoAtual-1)];
   } else{
-    reposicaoM[anoAtual] = 0;
-    RM.textContent = "";
+    dados.reposicao.machos[anoAtual] = 0;
   }
 
 }
 
 function calcularNascimentos() {
-  nascimentos.push(Math.ceil(((femeas[anoAtual] * (fertilidade / 100) * prolificidade) / 2) * partos_porAno));
+  dados.nascimentos.total.push(Math.ceil(((dados.quantidade.femeas[anoAtual] * (parametros.fertilidade / 100) * parametros.prolificidade)) * parametros.partosPorAno));
+  dados.nascimentos.machos.push(Math.ceil(dados.nascimentos.total[anoAtual]/2))
+  dados.nascimentos.femeas.push(Math.ceil(dados.nascimentos.total[anoAtual]/2))
 }
 
 function calcularPerdas() {
-  perdas1Ano.push(Math.ceil(nascimentos[anoAtual] * (mortalidade_1Ano / 100)));
-  perdas.push(Math.ceil(femeas[anoAtual] * (mortalidade / 100))); 
+  dados.perdas.borregos.push(Math.ceil(dados.nascimentos.machos[anoAtual] * (parametros.mortalidadeAbaixoDe1Ano / 100)));
+  dados.perdas.borregas.push(Math.ceil(dados.nascimentos.femeas[anoAtual] * (parametros.mortalidadeAbaixoDe1Ano / 100)));
+  dados.perdas.femeas.push(Math.ceil(dados.quantidade.femeas[anoAtual] * (parametros.mortalidadeAcimaDe1Ano / 100))); 
 }
 
 function calcularDescartes() {
-  descartes.push(Math.ceil(femeas[anoAtual] * (taxa_Descartes / 100)));
+  dados.descartes.femeas.push(Math.ceil(dados.quantidade.femeas[anoAtual] * (parametros.taxaDescartes / 100)));
 }
 
 function calcularReposicaoFemeas() {
-  if (femeas[anoAtual] + femeas[anoAtual] * (crescimento / 100) < maxfemeas) {
-    reposicaoF.push(Math.ceil(femeas[anoAtual] * (crescimento / 100) + perdas[anoAtual] + descartes[anoAtual]));
-  } else if (femeas[anoAtual] + femeas[anoAtual] * (crescimento / 100) == maxfemeas) {
-    reposicaoF.push(perdas[anoAtual] + descartes[anoAtual]);
+  if (dados.quantidade.femeas[anoAtual] + dados.quantidade.femeas[anoAtual] * (parametros.crescimento / 100) < parametros.maxFemeas) {
+    dados.reposicao.borregas.push(Math.ceil(dados.quantidade.femeas[anoAtual] * (parametros.crescimento / 100) + dados.perdas.femeas[anoAtual] + dados.descartes.femeas[anoAtual]));
+  } else if (dados.quantidade.femeas[anoAtual] + dados.quantidade.femeas[anoAtual] * (parametros.crescimento / 100) == parametros.maxFemeas) {
+    dados.reposicao.borregas.push(dados.perdas.femeas[anoAtual] + dados.descartes.femeas[anoAtual]);
   } else {
-    reposicaoF.push((femeas[anoAtual] - perdas[anoAtual] - descartes[anoAtual] - maxfemeas) * -1);
+    dados.reposicao.borregas.push((dados.quantidade.femeas[anoAtual] - dados.perdas.femeas[anoAtual] - dados.descartes.femeas[anoAtual] - parametros.maxFemeas) * -1);
   }
 }
 
 function calcularVendas() {
-  vendasM.push((nascimentos[anoAtual] - perdas1Ano[anoAtual]));
-  comprasM.push(reposicaoM[anoAtual]);
-  vendasF.push(nascimentos[anoAtual] - perdas1Ano[anoAtual] - reposicaoF[anoAtual]);
-  mostrarVendas();
-}
+  dados.vendas.borregos.push((dados.nascimentos.machos[anoAtual] - dados.perdas.borregos[anoAtual]));
+  dados.compras.borregos.push(dados.reposicao.machos[anoAtual]);
 
-function mostrarVendas() {
-  if (vendasF[controlador] > 0){
-    VF.textContent = vendasF[controlador];
-    CF.textContent = "";
-  } else if (vendasF[controlador] < 0){
-    VF.textContent = "";
-    CF.textContent = vendasF[controlador]*-1;
+  if ((dados.nascimentos.femeas[anoAtual] - dados.perdas.borregas[anoAtual] - dados.reposicao.borregas[anoAtual]) > 0) {
+    dados.vendas.borregas.push(dados.nascimentos.femeas[anoAtual] - dados.perdas.borregas[anoAtual] - dados.reposicao.borregas[anoAtual]);
+    dados.compras.borregas.push(0)
+  } 
+  else if((dados.nascimentos.femeas[anoAtual] - dados.perdas.borregas[anoAtual] - dados.reposicao.borregas[anoAtual]) == 0) {
+    dados.vendas.borregas.push(0)
+    dados.compras.borregas.push(0)
+  }
+  else {
+    dados.compras.borregas.push((dados.nascimentos.femeas[anoAtual] - dados.perdas.borregas[anoAtual] - dados.reposicao.borregas[anoAtual]) *-1);
+    dados.vendas.borregas.push(0)
   } 
 }
 
 function calcularEstoque() {
-  femeasFinal[anoAtual] = femeas[anoAtual] - perdas[anoAtual] - descartes[anoAtual];
+  dados.estoqueFinal.femeas[anoAtual] = dados.quantidade.femeas[anoAtual] - dados.perdas.femeas[anoAtual] - dados.descartes.femeas[anoAtual];
 }
 
 function calcularPeso() {
-  pesoM.push(machos[anoAtual] * pesoMedioM);
-  pesoF.push(femeasFinal[anoAtual] * pesoMedioF + reposicaoF[anoAtual] * pesoMedioR);
-  pesoT.push(pesoM[anoAtual] + pesoF[anoAtual])
+  dados.peso.machos.push(dados.quantidade.machos[anoAtual] * parametros.pesoMedio.machos);
+  dados.peso.femeas.push(dados.estoqueFinal.femeas[anoAtual] * parametros.pesoMedio.femeas + dados.reposicao.borregas[anoAtual] * parametros.pesoMedio.borregas);
+  dados.peso.total.push(dados.peso.machos[anoAtual] + dados.peso.femeas[anoAtual])
 }
 
 function calcularEUA() {
-  femeasEUA.push((Math.pow(pesoMedioF, 0.75) / Math.pow(450, 0.75)) * femeasFinal[anoAtual] + (Math.pow(pesoMedioR, 0.75) / Math.pow(450, 0.75)) * reposicaoF[anoAtual]);
-  machosEUA.push((Math.pow(pesoMedioM, 0.75) / Math.pow(450, 0.75)) * machos[anoAtual]);
-  totalEUA.push(femeasEUA[anoAtual] + machosEUA[anoAtual]);
+  dados.Eua.femeas.push((Math.pow(parametros.pesoMedio.femeas, 0.75) / Math.pow(450, 0.75)) * dados.estoqueFinal.femeas[anoAtual] + (Math.pow(parametros.pesoMedio.borregas, 0.75) / Math.pow(450, 0.75)) * dados.reposicao.borregas[anoAtual]);
+  dados.Eua.machos.push((Math.pow(parametros.pesoMedio.machos, 0.75) / Math.pow(450, 0.75)) * dados.quantidade.machos[anoAtual]);
+  dados.Eua.total.push(dados.Eua.femeas[anoAtual] + dados.Eua.machos[anoAtual]);
 }
 
 function calcularCusto() {
-  receita.push(vendasM[anoAtual] * peso_abate * preco_kg + vendasF[anoAtual] * peso_abate * preco_kg);
+  dados.receita.push(dados.vendas.borregos[anoAtual] * parametros.pesoAbate * parametros.precoKg + dados.vendas.borregas[anoAtual] * parametros.pesoAbate * parametros.precoKg); //O dinheiro usado pra comprar novas borregas, deve sair daqui?
   // custeioReal.push(receita[anoAtual] * (custeio / 100));
   // totalReal.push(receita[anoAtual] * (custeioTotal / 100));
   // lucro.push(receita[anoAtual] - totalReal[anoAtual]);
 }
 
 function atualizarRebanho() {
-  femeas.push(femeasFinal[anoAtual] + reposicaoF[anoAtual]);
-}
-
-function avancar() {
-  if(controlador < (machos.length-1)){
-    controlador++;
-    M.textContent = machos[controlador];
-    F.textContent = femeas[controlador];
-    N[0].textContent = nascimentos[controlador];
-    N[1].textContent = nascimentos[controlador];
-    P.textContent = perdas[controlador];
-    PA[0].textContent = perdas1Ano[controlador];
-    PA[1].textContent = perdas1Ano[controlador];
-    D.textContent = descartes[controlador];
-    RF.textContent = reposicaoF[controlador];
-    RM.textContent = reposicaoM[controlador];
-    VM.textContent = vendasM[controlador];
-    CM.textContent = comprasM[controlador];
-    mostrarVendas();
-    EM.textContent = machos[controlador];
-    EF.textContent = femeas[controlador];
-    ER.textContent = reposicaoF[controlador];
-    PM.textContent = pesoM[controlador].toFixed(2) + "Kg";
-    PF.textContent = pesoF[controlador].toFixed(2) + "Kg";
-    PT.textContent = pesoT[controlador].toFixed(2) + "Kg";
-    EUAM.textContent = machosEUA[controlador].toFixed(2);
-    EUAF.textContent = femeasEUA[controlador].toFixed(2);
-    EUAT.textContent = totalEUA[controlador].toFixed(2);
-    RE.textContent = "R$" + receita[controlador].toFixed(2);
-    // C.textContent = "R$" + custeioReal[controlador].toFixed(2);
-    // CT.textContent = "R$" + totalReal[controlador].toFixed(2);
-    // L.textContent = "R$" + lucro[controlador].toFixed(2);
-    A[0].textContent = "Ano "+ (controlador+1);
-    A[1].textContent = "Ano "+ (controlador+1);
-    atualizarTabela();
-  }
-}
-
-function retroceder() {
-  if(controlador > 0){
-    controlador--;
-    M.textContent = machos[controlador];
-    F.textContent = femeas[controlador];
-    N[0].textContent = nascimentos[controlador];
-    N[1].textContent = nascimentos[controlador];
-    P.textContent = perdas[controlador];
-    PA[0].textContent = perdas1Ano[controlador];
-    PA[1].textContent = perdas1Ano[controlador];
-    D.textContent = descartes[controlador];
-    RF.textContent = reposicaoF[controlador];
-    RM.textContent = reposicaoM[controlador];
-    VM.textContent = vendasM[controlador];
-    CM.textContent = comprasM[controlador];
-    mostrarVendas();
-    EM.textContent = machos[controlador];
-    EF.textContent = femeas[controlador];
-    ER.textContent = reposicaoF[controlador];
-    PM.textContent = pesoM[controlador].toFixed(2) + "Kg";
-    PF.textContent = pesoF[controlador].toFixed(2) + "Kg";
-    PT.textContent = pesoT[controlador].toFixed(2) + "Kg";
-    EUAM.textContent = machosEUA[controlador].toFixed(2);
-    EUAF.textContent = femeasEUA[controlador].toFixed(2);
-    EUAT.textContent = totalEUA[controlador].toFixed(2);
-    RE.textContent = "R$" + receita[controlador].toFixed(2);
-    // C.textContent = "R$" + custeioReal[controlador].toFixed(2);
-    // CT.textContent = "R$" + totalReal[controlador].toFixed(2);
-    // L.textContent = "R$" + lucro[controlador].toFixed(2);
-    A[0].textContent = "Ano "+ (controlador+1);
-    A[1].textContent = "Ano "+ (controlador+1);
-    atualizarTabela();
-  }
+  dados.quantidade.femeas.push(dados.estoqueFinal.femeas[anoAtual] + dados.reposicao.borregas[anoAtual]);
 }
 
 function mostrarInformacoes() {
   calcularReposicaoMachos();
-  M.textContent = machos[0];
-  F.textContent = femeas[0];
+  M.textContent = dados.quantidade.machos[controlador];
+  F.textContent = dados.quantidade.femeas[controlador];
   calcularNascimentos();
-  N[0].textContent = nascimentos[0];
-  N[1].textContent = nascimentos[0];
+  N[0].textContent = dados.nascimentos.machos[controlador];
+  N[1].textContent = dados.nascimentos.femeas[controlador];
   calcularPerdas();
-  P.textContent = perdas[0];
-  PA[0].textContent = perdas1Ano[0];
-  PA[1].textContent = perdas1Ano[0];
+  P.textContent = dados.perdas.femeas[controlador];
+  PA[0].textContent = dados.perdas.borregos[controlador];
+  PA[1].textContent = dados.perdas.borregas[controlador];
   calcularDescartes();
-  D.textContent = descartes[0];
+  D.textContent = dados.descartes.femeas[controlador];
   calcularReposicaoFemeas();
-  RF.textContent = reposicaoF[0];
-  RM.textContent = reposicaoM[0];
+  RF.textContent = dados.reposicao.borregas[controlador];
+  RM.textContent = dados.reposicao.machos[controlador];
   calcularVendas();
-  VM.textContent = vendasM[0];
-  CM.textContent = comprasM[0];
+  VM.textContent = dados.vendas.borregos[controlador];
+  CM.textContent = dados.compras.borregos[controlador];
+  VF.textContent = dados.vendas.borregas[controlador];
+  CF.textContent = dados.compras.borregas[controlador];;
   calcularEstoque();
-  EM.textContent = machos[0];
-  EF.textContent = femeasFinal[0];
-  ER.textContent = reposicaoF[0];
+  EM.textContent = dados.quantidade.machos[controlador];
+  EF.textContent = dados.estoqueFinal.femeas[controlador];
+  ER.textContent = dados.reposicao.borregas[controlador];
   calcularPeso();
-  PM.textContent = pesoM[0].toFixed(2) + "Kg";
-  PF.textContent = pesoF[0].toFixed(2) + "Kg";
-  PT.textContent = pesoT[0].toFixed(2) + "Kg";
+  PM.textContent = dados.peso.machos[controlador].toFixed(2) + "Kg";
+  PF.textContent = dados.peso.femeas[controlador].toFixed(2) + "Kg";
+  PT.textContent = dados.peso.total[controlador].toFixed(2) + "Kg";
   calcularEUA();
-  EUAM.textContent = machosEUA[0].toFixed(2);
-  EUAF.textContent = femeasEUA[0].toFixed(2);
-  EUAT.textContent = totalEUA[0].toFixed(2);
+  EUAM.textContent = dados.Eua.machos[controlador].toFixed(2);
+  EUAF.textContent = dados.Eua.femeas[controlador].toFixed(2);
+  EUAT.textContent = dados.Eua.total[controlador].toFixed(2);
   calcularCusto();
-  RE.textContent = "R$" + receita[0].toFixed(2);
+  RE.textContent = "R$" + dados.receita[controlador].toFixed(2);
   // C.textContent = "R$" + custeioReal[0].toFixed(2);
   // CT.textContent = "R$" + totalReal[0].toFixed(2);
   // L.textContent = "R$" + lucro[0].toFixed(2);
@@ -343,4 +355,160 @@ console.log("E.U.A Machos: "+ machosEUA[anoAtual].toFixed(2) +" E.U.A Fêmeas: "
 console.log("Receita: R$"+ receita[anoAtual].toFixed(2) +" Custo em real: R$"+ custeioReal[anoAtual].toFixed(2));
 console.log("Custo Total: R$"+ totalReal[anoAtual].toFixed(2));
 console.log("Lucro: R$"+ lucro[anoAtual].toFixed(2));
+*/
+
+/*
+function calcularReposicaoMachos() {
+  const anterior = dados.quantidade.machos[anoAtual - 1] || 0;
+  dados.quantidade.machos[anoAtual] = Math.ceil(dados.quantidade.femeas[anoAtual] / parametros.machosPorFemeas);
+  dados.reposicao.machos[anoAtual] = Math.max(0, dados.quantidade.machos[anoAtual] - anterior);
+}
+*/
+
+/*
+function avancar() {
+  if(controlador < (dados.quantidade.machos.length-1)){
+    controlador++;
+    M.textContent = dados.quantidade.machos[controlador];
+    F.textContent = dados.quantidade.femeas[controlador];
+    N[0].textContent = dados.nascimentos.machos[controlador];
+    N[1].textContent = dados.nascimentos.femeas[controlador];
+    P.textContent = dados.perdas.femeas[controlador];
+    PA[0].textContent = dados.perdas.borregos[controlador]; //Verificar a ordem
+    PA[1].textContent = dados.perdas.borregas[controlador];
+    D.textContent = dados.descartes.femeas[controlador];
+    RF.textContent = dados.reposicao.borregas[controlador];
+    RM.textContent = dados.reposicao.machos[controlador];
+    VM.textContent = dados.vendas.borregos[controlador];
+    CM.textContent = dados.compras.borregos[controlador];
+    VF.textContent = dados.vendas.borregas[controlador];
+    CF.textContent = dados.compras.borregas[controlador];
+    EM.textContent = dados.quantidade.machos[controlador];
+    EF.textContent = dados.estoqueFinal.femeas[controlador];
+    ER.textContent = dados.reposicao.borregas[controlador];
+    PM.textContent = dados.peso.machos[controlador].toFixed(2) + "Kg";
+    PF.textContent = dados.peso.femeas[controlador].toFixed(2) + "Kg";
+    PT.textContent = dados.peso.total[controlador].toFixed(2) + "Kg";
+    EUAM.textContent = dados.Eua.machos[controlador].toFixed(2);
+    EUAF.textContent = dados.Eua.femeas[controlador].toFixed(2);
+    EUAT.textContent = dados.Eua.total[controlador].toFixed(2);
+    RE.textContent = "R$" + dados.receita[controlador].toFixed(2);
+    // C.textContent = "R$" + custeioReal[controlador].toFixed(2);
+    // CT.textContent = "R$" + totalReal[controlador].toFixed(2);
+    // L.textContent = "R$" + lucro[controlador].toFixed(2);
+    A[0].textContent = "Ano "+ (controlador+1);
+    A[1].textContent = "Ano "+ (controlador+1);
+    atualizarTabela();
+  }
+}
+
+function retroceder() {
+  if(controlador > 0){
+    controlador--;
+    M.textContent = dados.quantidade.machos[controlador];
+    F.textContent = dados.quantidade.femeas[controlador];
+    N[0].textContent = dados.nascimentos.machos[controlador];
+    N[1].textContent = dados.nascimentos.femeas[controlador];
+    P.textContent = dados.perdas.femeas[controlador];
+    PA[0].textContent = dados.perdas.borregos[controlador];
+    PA[1].textContent = dados.perdas.borregas[controlador];
+    D.textContent = dados.descartes.femeas[controlador];
+    RF.textContent = dados.reposicao.borregas[controlador];
+    RM.textContent = dados.reposicao.machos[controlador];
+    VM.textContent = dados.vendas.borregos[controlador];
+    CM.textContent = dados.compras.borregos[controlador];
+    VF.textContent = dados.vendas.borregas[controlador];
+    CF.textContent = dados.compras.borregas[controlador];;
+    EM.textContent = dados.quantidade.machos[controlador];
+    EF.textContent = dados.estoqueFinal.femeas[controlador];
+    ER.textContent = dados.reposicao.borregas[controlador];
+    PM.textContent = dados.peso.machos[controlador].toFixed(2) + "Kg";
+    PF.textContent = dados.peso.femeas[controlador].toFixed(2) + "Kg";
+    PT.textContent = dados.peso.total[controlador].toFixed(2) + "Kg";
+    EUAM.textContent = dados.Eua.machos[controlador].toFixed(2);
+    EUAF.textContent = dados.Eua.femeas[controlador].toFixed(2);
+    EUAT.textContent = dados.Eua.total[controlador].toFixed(2);
+    RE.textContent = "R$" + dados.receita[controlador].toFixed(2);
+    // C.textContent = "R$" + custeioReal[controlador].toFixed(2);
+    // CT.textContent = "R$" + totalReal[controlador].toFixed(2);
+    // L.textContent = "R$" + lucro[controlador].toFixed(2);
+    A[0].textContent = "Ano "+ (controlador+1);
+    A[1].textContent = "Ano "+ (controlador+1);
+    atualizarTabela();
+  }
+}
+*/
+
+/*
+export let anoAtual = 0, controlador = 0, numAnos = 0;
+
+export const dados = {
+  quantidade: { machos: [], femeas: [50] },
+  nascimentos: { machos: [], femeas: [], total: [] },
+  perdas: { femeas: [], borregos: [], borregas: [] },
+  descartes: { femeas: [] },
+  reposicao: { machos: [], borregas: [] },
+  vendas: { borregos:[], borregas:[] },
+  compras: { borregos:[], borregas:[] },
+  estoqueFinal: { machos: [], femeas: [], borregas: [] },
+  peso: { machos: [], femeas: [], total: [] },
+  Eua: { machos: [], femeas: [], total: [] },
+  receita: [],
+};
+
+export const parametros = {
+  maxFemeas: 200,
+  machosPorFemeas: 40,
+  partosPorAno: 1,
+  prolificidade: 1.2,
+  fertilidade: 70,
+  mortalidadeAbaixoDe1Ano: 5,
+  mortalidadeAcimaDe1Ano: 2.5,
+  idadeDesmame: 16,
+  pesoAbate: 30,
+  pesoMedio: { machos: 60, femeas: 55, borregas: 41.25 },
+  taxaDescartes: 10,
+  crescimento: 30,
+  precoKg: 5,
+  custeio: 24,
+  //custeioTotal: 39,
+};
+
+export const suplementos = {
+  materiaSeca: {
+    femeas: 3.5,
+    machos: 3.5,
+    borregos: 3.5,
+    borregas1: 4,
+    borregas2: 4
+  },
+  diasSuplementos: {
+    femeas: 240,
+    machos: 365,
+    borregos: 90,
+    borregas1: 90,
+    borregas2: 180
+  },
+  volumoso: {
+    femeas: 60,
+    machos: 60,
+    borregos: 60,
+    borregas1: 60,
+    borregas2: 60
+  },
+  materiaSecaVolumoso: {
+    femeas: 30,
+    machos: 30,
+    borregos: 30,
+    borregas1: 30,
+    borregas2: 30
+  },
+  materiaSecaConcentrado: {
+    femeas: 92,
+    machos: 92,
+    borregos: 92,
+    borregas1: 92,
+    borregas2: 92
+  }
+};
 */
