@@ -89,39 +89,9 @@ let ConcenF = [],
   ConcenSecaTotal_reb = [],
   ConcenSecaTotal_per = [];
 import {
-    femeas,
-    machos,
-    nascimentos,
-    pesoMedioM,
-    pesoMedioF,
-    pesoMedioR,
-    peso_abate,
-    idade_desmame,
-    femeas_materiaSeca,
-    machos_materiaSeca,
-    borregos_materiaSeca,
-    borregas_materiaSeca1,
-    borregas_materiaSeca2,
-    femeas_diasSuplementos,
-    machos_diasSuplementos,
-    borregos_diasSuplementos,
-    borregas_diasSuplementos1,
-    borregas_diasSuplementos2,
-    Fvolumoso,
-    Mvolumoso,
-    Bvolumoso,
-    BA1volumoso,
-    BA2volumoso,
-    FmateriaSeca_volumoso,
-    MmateriaSeca_volumoso,
-    BmateriaSeca_volumoso,
-    BA1materiaSeca_volumoso,
-    BA2materiaSeca_volumoso,
-    FmateriaSeca_concentrado,
-    MmateriaSeca_concentrado,
-    BmateriaSeca_concentrado,
-    BA1materiaSeca_concentrado,
-    BA2materiaSeca_concentrado,
+    dados,
+    parametros,
+    suplementos,
     anoAtual,
     controlador
 } from "./Index.js";
@@ -221,110 +191,233 @@ var CCT = document.querySelector("#concentradoCT");
 var CCTR = document.querySelector("#concentradoCTR");
 var CCTP = document.querySelector("#concentradoCTP");
 
-function calcularConsumoTotal(){
-    consumoF.push(pesoMedioF * femeas_materiaSeca);
-    consumoF_reb.push(consumoF[anoAtual] * femeas[anoAtual]);
-    consumoF_per.push(consumoF_reb[anoAtual] * femeas_diasSuplementos);
-    consumoM.push(pesoMedioM * machos_materiaSeca);
-    consumoM_reb.push(consumoM[anoAtual] * machos[anoAtual]);
-    consumoM_per.push(consumoM_reb[anoAtual] * machos_diasSuplementos);
-    consumoB.push(((idade_desmame + peso_abate) / 2) * borregos_materiaSeca);
-    consumoB_reb.push(consumoB[anoAtual] * nascimentos[anoAtual]);
-    consumoB_per.push(consumoB_reb[anoAtual] * borregos_diasSuplementos);
-    consumoBA1.push(((idade_desmame + peso_abate) / 2) * borregas_materiaSeca1);
-    consumoBA1_reb.push(consumoBA1[anoAtual] * nascimentos[anoAtual]);
-    consumoBA1_per.push(consumoBA1_reb[anoAtual] * borregas_diasSuplementos1);
-    consumoBA2.push(((peso_abate + pesoMedioR) / 2) * borregas_materiaSeca2);
-    consumoBA2_reb.push(consumoBA2[anoAtual] * nascimentos[anoAtual]);
-    consumoBA2_per.push(consumoBA2_reb[anoAtual] * borregas_diasSuplementos2);
-    consumoTotal.push(consumoF[anoAtual] + consumoM[anoAtual] + consumoB[anoAtual] + consumoBA1[anoAtual] + consumoBA2[anoAtual]);
-     consumoTotal_reb.push(consumoF_reb[anoAtual] + consumoM_reb[anoAtual] + consumoB_reb[anoAtual] + consumoBA1_reb[anoAtual] + consumoBA2_reb[anoAtual]);
-    consumoTotal_per.push(consumoF_per[anoAtual] + consumoM_per[anoAtual] + consumoB_per[anoAtual] + consumoBA1_per[anoAtual] + consumoBA2_per[anoAtual]);
+function calcularConsumoTotal() {
+  consumoF.push(parametros.pesoMedio.femeas * suplementos.materiaSeca.femeas);
+  consumoF_reb.push(consumoF[anoAtual] * dados.quantidade.femeas[anoAtual]);
+  consumoF_per.push(consumoF_reb[anoAtual] * suplementos.diasSuplementos.femeas);
+
+  consumoM.push(parametros.pesoMedio.machos * suplementos.materiaSeca.machos);
+  consumoM_reb.push(consumoM[anoAtual] * dados.quantidade.machos[anoAtual]);
+  consumoM_per.push(consumoM_reb[anoAtual] * suplementos.diasSuplementos.machos);
+
+  consumoB.push(((parametros.idadeDesmame + parametros.pesoAbate) / 2) * suplementos.materiaSeca.borregos);
+  consumoB_reb.push(consumoB[anoAtual] * dados.nascimentos.machos[anoAtual]);
+  consumoB_per.push(consumoB_reb[anoAtual] * suplementos.diasSuplementos.borregos);
+
+  consumoBA1.push(((parametros.idadeDesmame + parametros.pesoAbate) / 2) * suplementos.materiaSeca.borregas1);
+  consumoBA1_reb.push(consumoBA1[anoAtual] * dados.nascimentos.femeas[anoAtual]);
+  consumoBA1_per.push(consumoBA1_reb[anoAtual] * suplementos.diasSuplementos.borregas1);
+
+  consumoBA2.push(((parametros.pesoAbate + parametros.pesoMedio.borregas) / 2) * suplementos.materiaSeca.borregas2);
+  consumoBA2_reb.push(consumoBA2[anoAtual] * dados.nascimentos.femeas[anoAtual]);
+  consumoBA2_per.push(consumoBA2_reb[anoAtual] * suplementos.diasSuplementos.borregas2);
+
+  consumoTotal.push(consumoF[anoAtual] + consumoM[anoAtual] + consumoB[anoAtual] + consumoBA1[anoAtual] + consumoBA2[anoAtual]);
+  consumoTotal_reb.push(consumoF_reb[anoAtual] + consumoM_reb[anoAtual] + consumoB_reb[anoAtual] + consumoBA1_reb[anoAtual] + consumoBA2_reb[anoAtual]);
+  consumoTotal_per.push(consumoF_per[anoAtual] + consumoM_per[anoAtual] + consumoB_per[anoAtual] + consumoBA1_per[anoAtual] + consumoBA2_per[anoAtual]);
 }
 
-function calcularVolumoso(){
-    VolF.push(consumoF[anoAtual] * Fvolumoso);
-    VolF_reb.push(consumoF_reb[anoAtual] * Fvolumoso);
-    VolF_per.push(consumoF_per[anoAtual] * Fvolumoso);
-    VolM.push(consumoM[anoAtual] * Mvolumoso);
-    VolM_reb.push(consumoM_reb[anoAtual] * Mvolumoso);
-    VolM_per.push(consumoM_per[anoAtual] * Mvolumoso);
-    VolB.push(consumoB[anoAtual] * Bvolumoso);
-    VolB_reb.push(consumoB_reb[anoAtual] * Bvolumoso);
-    VolB_per.push(consumoB_per[anoAtual] * Bvolumoso);
-    VolBA1.push(consumoBA1[anoAtual] * BA1volumoso);
-    VolBA1_reb.push(consumoBA1_reb[anoAtual] * BA1volumoso);
-    VolBA1_per.push(consumoBA1_per[anoAtual] * BA1volumoso);
-    VolBA2.push(consumoBA2[anoAtual] * BA2volumoso);
-    VolBA2_reb.push(consumoBA2_reb[anoAtual] * BA2volumoso);
-    VolBA2_per.push(consumoBA2_per[anoAtual] * BA2volumoso);
-    VolTotal.push(VolF[anoAtual] + VolM[anoAtual] + VolB[anoAtual] + VolBA1[anoAtual] + VolBA2[anoAtual]);
-    VolTotal_reb.push(VolF_reb[anoAtual] + VolM_reb[anoAtual] + VolB_reb[anoAtual] + VolBA1_reb[anoAtual] + VolBA2_reb[anoAtual]);
-    VolTotal_per.push(VolF_per[anoAtual] + VolM_per[anoAtual] + VolB_per[anoAtual] + VolBA1_per[anoAtual] + VolBA2_per[anoAtual]);
+function calcularVolumoso() {
+  VolF.push(consumoF[anoAtual] * suplementos.volumoso.femeas);
+  VolF_reb.push(consumoF_reb[anoAtual] * suplementos.volumoso.femeas);
+  VolF_per.push(consumoF_per[anoAtual] * suplementos.volumoso.femeas);
+
+  VolM.push(consumoM[anoAtual] * suplementos.volumoso.machos);
+  VolM_reb.push(consumoM_reb[anoAtual] * suplementos.volumoso.machos);
+  VolM_per.push(consumoM_per[anoAtual] * suplementos.volumoso.machos);
+
+  VolB.push(consumoB[anoAtual] * suplementos.volumoso.borregos);
+  VolB_reb.push(consumoB_reb[anoAtual] * suplementos.volumoso.borregos);
+  VolB_per.push(consumoB_per[anoAtual] * suplementos.volumoso.borregos);
+
+  VolBA1.push(consumoBA1[anoAtual] * suplementos.volumoso.borregas1);
+  VolBA1_reb.push(consumoBA1_reb[anoAtual] * suplementos.volumoso.borregas1);
+  VolBA1_per.push(consumoBA1_per[anoAtual] * suplementos.volumoso.borregas1);
+
+  VolBA2.push(consumoBA2[anoAtual] * suplementos.volumoso.borregas2);
+  VolBA2_reb.push(consumoBA2_reb[anoAtual] * suplementos.volumoso.borregas2);
+  VolBA2_per.push(consumoBA2_per[anoAtual] * suplementos.volumoso.borregas2);
+
+  VolTotal.push(VolF[anoAtual] + VolM[anoAtual] + VolB[anoAtual] + VolBA1[anoAtual] + VolBA2[anoAtual]);
+  VolTotal_reb.push(VolF_reb[anoAtual] + VolM_reb[anoAtual] + VolB_reb[anoAtual] + VolBA1_reb[anoAtual] + VolBA2_reb[anoAtual]);
+  VolTotal_per.push(VolF_per[anoAtual] + VolM_per[anoAtual] + VolB_per[anoAtual] + VolBA1_per[anoAtual] + VolBA2_per[anoAtual]);
 }
 
-function calcularMateriaSecaVolumoso(){
-  VolSecaF.push(VolF[anoAtual] / FmateriaSeca_volumoso);
-  VolSecaF_reb.push(VolF_reb[anoAtual] / FmateriaSeca_volumoso);
-  VolSecaF_per.push(VolF_per[anoAtual] / FmateriaSeca_volumoso);
-  VolSecaM.push(VolM[anoAtual] / MmateriaSeca_volumoso);
-  VolSecaM_reb.push(VolM_reb[anoAtual] / MmateriaSeca_volumoso);
-  VolSecaM_per.push(VolM_per[anoAtual] / MmateriaSeca_volumoso);
-  VolSecaB.push(VolB[anoAtual] / BmateriaSeca_volumoso);
-  VolSecaB_reb.push(VolB_reb[anoAtual] / BmateriaSeca_volumoso);
-  VolSecaB_per.push(VolB_per[anoAtual] /BmateriaSeca_volumoso);
-  VolSecaBA1.push(VolBA1[anoAtual] / BA1materiaSeca_volumoso);
-  VolSecaBA1_reb.push(VolBA1_reb[anoAtual] / BA1materiaSeca_volumoso);
-  VolSecaBA1_per.push(VolBA1_per[anoAtual] /BA1materiaSeca_volumoso);
-  VolSecaBA2.push(VolBA2[anoAtual] / BA2materiaSeca_volumoso);
-  VolSecaBA2_reb.push(VolBA2_reb[anoAtual] / BA2materiaSeca_volumoso);
-  VolSecaBA2_per.push(VolBA2_per[anoAtual] / BA2materiaSeca_volumoso);
+function calcularMateriaSecaVolumoso() {
+  VolSecaF.push(VolF[anoAtual] / suplementos.materiaSecaVolumoso.femeas);
+  VolSecaF_reb.push(VolF_reb[anoAtual] / suplementos.materiaSecaVolumoso.femeas);
+  VolSecaF_per.push(VolF_per[anoAtual] / suplementos.materiaSecaVolumoso.femeas);
+
+  VolSecaM.push(VolM[anoAtual] / suplementos.materiaSecaVolumoso.machos);
+  VolSecaM_reb.push(VolM_reb[anoAtual] / suplementos.materiaSecaVolumoso.machos);
+  VolSecaM_per.push(VolM_per[anoAtual] / suplementos.materiaSecaVolumoso.machos);
+
+  VolSecaB.push(VolB[anoAtual] / suplementos.materiaSecaVolumoso.borregos);
+  VolSecaB_reb.push(VolB_reb[anoAtual] / suplementos.materiaSecaVolumoso.borregos);
+  VolSecaB_per.push(VolB_per[anoAtual] / suplementos.materiaSecaVolumoso.borregos);
+
+  VolSecaBA1.push(VolBA1[anoAtual] / suplementos.materiaSecaVolumoso.borregas1);
+  VolSecaBA1_reb.push(VolBA1_reb[anoAtual] / suplementos.materiaSecaVolumoso.borregas1);
+  VolSecaBA1_per.push(VolBA1_per[anoAtual] / suplementos.materiaSecaVolumoso.borregas1);
+
+  VolSecaBA2.push(VolBA2[anoAtual] / suplementos.materiaSecaVolumoso.borregas2);
+  VolSecaBA2_reb.push(VolBA2_reb[anoAtual] / suplementos.materiaSecaVolumoso.borregas2);
+  VolSecaBA2_per.push(VolBA2_per[anoAtual] / suplementos.materiaSecaVolumoso.borregas2);
+
   VolSecaTotal.push(VolSecaF[anoAtual] + VolSecaM[anoAtual] + VolSecaB[anoAtual] + VolSecaBA1[anoAtual] + VolSecaBA2[anoAtual]);
   VolSecaTotal_reb.push(VolSecaF_reb[anoAtual] + VolSecaM_reb[anoAtual] + VolSecaB_reb[anoAtual] + VolSecaBA1_reb[anoAtual] + VolSecaBA2_reb[anoAtual]);
   VolSecaTotal_per.push(VolSecaF_per[anoAtual] + VolSecaM_per[anoAtual] + VolSecaB_per[anoAtual] + VolSecaBA1_per[anoAtual] + VolSecaBA2_per[anoAtual]);
 }
 
-function calcularConcentrado(){
-    ConcenF.push(consumoF[anoAtual] - VolF[anoAtual]);
-    ConcenF_reb.push(consumoF_reb[anoAtual] - VolF_reb[anoAtual]);
-    ConcenF_per.push(consumoF_per[anoAtual] - VolF_per[anoAtual]);
-    ConcenM.push(consumoM[anoAtual] - VolM[anoAtual]);
-    ConcenM_reb.push(consumoM_reb[anoAtual] - VolM_reb[anoAtual]);
-    ConcenM_per.push(consumoM_per[anoAtual] - VolM_per[anoAtual]);
-    ConcenB.push(consumoB[anoAtual] - VolB[anoAtual]);
-    ConcenB_reb.push(consumoB_reb[anoAtual] - VolB_reb[anoAtual]);
-    ConcenB_per.push(consumoB_per[anoAtual] - VolB_per[anoAtual]);
-    ConcenBA1.push(consumoBA1[anoAtual] - VolBA1[anoAtual]);
-    ConcenBA1_reb.push(consumoBA1_reb[anoAtual] - VolBA1_reb[anoAtual]);
-    ConcenBA1_per.push(consumoBA1_per[anoAtual] - VolBA1_per[anoAtual]);
-    ConcenBA2.push(consumoBA2[anoAtual] - VolBA2[anoAtual]);
-    ConcenBA2_reb.push(consumoBA2_reb[anoAtual] - VolBA2_reb[anoAtual]);
-    ConcenBA2_per.push(consumoBA2_per[anoAtual] - VolBA2_per[anoAtual]);
-    ConcenTotal.push(ConcenF[anoAtual] + ConcenM[anoAtual] + ConcenB[anoAtual] + ConcenBA1[anoAtual] + ConcenBA2[anoAtual]);
-    ConcenTotal_reb.push(ConcenF_reb[anoAtual] + ConcenM_reb[anoAtual] + ConcenB_reb[anoAtual] + ConcenBA1_reb[anoAtual] + ConcenBA2_reb[anoAtual]);
-    ConcenTotal_per.push(ConcenF_per[anoAtual] + ConcenM_per[anoAtual] + ConcenB_per[anoAtual] + ConcenBA1_per[anoAtual] + ConcenBA2_per[anoAtual]);
-  }
+function calcularConcentrado() {
+  ConcenF.push(consumoF[anoAtual] - VolF[anoAtual]);
+  ConcenF_reb.push(consumoF_reb[anoAtual] - VolF_reb[anoAtual]);
+  ConcenF_per.push(consumoF_per[anoAtual] - VolF_per[anoAtual]);
 
-function calcularMateriaSecaConcentrado(){
-    ConcenSecaF.push(ConcenF[anoAtual] / FmateriaSeca_concentrado);
-    ConcenSecaF_reb.push(ConcenF_reb[anoAtual] / FmateriaSeca_concentrado);
-    ConcenSecaF_per.push(ConcenF_per[anoAtual] / FmateriaSeca_concentrado);
-    ConcenSecaM.push(ConcenM[anoAtual] / MmateriaSeca_concentrado);
-    ConcenSecaM_reb.push(ConcenM_reb[anoAtual] / MmateriaSeca_concentrado);
-    ConcenSecaM_per.push(ConcenM_per[anoAtual] / MmateriaSeca_concentrado);
-    ConcenSecaB.push(ConcenB[anoAtual] / BmateriaSeca_concentrado);
-    ConcenSecaB_reb.push(ConcenB_reb[anoAtual] / BmateriaSeca_concentrado);
-    ConcenSecaB_per.push(ConcenB_per[anoAtual] / BmateriaSeca_concentrado);
-    ConcenSecaBA1.push(ConcenBA1[anoAtual] / BA1materiaSeca_concentrado);
-    ConcenSecaBA1_reb.push(ConcenBA1_reb[anoAtual] / BA1materiaSeca_concentrado);
-    ConcenSecaBA1_per.push(ConcenBA1_per[anoAtual] / BA1materiaSeca_concentrado);
-    ConcenSecaBA2.push(ConcenBA2[anoAtual] / BA2materiaSeca_concentrado);
-    ConcenSecaBA2_reb.push(ConcenBA2_reb[anoAtual] / BA2materiaSeca_concentrado);
-    ConcenSecaBA2_per.push(ConcenBA2_per[anoAtual] / BA2materiaSeca_concentrado);
-    ConcenSecaTotal.push(ConcenSecaF[anoAtual] + ConcenSecaM[anoAtual] + ConcenSecaB[anoAtual] + ConcenSecaBA1[anoAtual] + ConcenSecaBA2[anoAtual]);
-    ConcenSecaTotal_reb.push(ConcenSecaF_reb[anoAtual] + ConcenSecaM_reb[anoAtual] + ConcenSecaB_reb[anoAtual] + ConcenSecaBA1_reb[anoAtual] + ConcenSecaBA2_reb[anoAtual]);
-    ConcenSecaTotal_per.push(ConcenSecaF_per[anoAtual] + ConcenSecaM_per[anoAtual] + ConcenSecaB_per[anoAtual] + ConcenSecaBA1_per[anoAtual] + ConcenSecaBA2_per[anoAtual]);
-  }
+  ConcenM.push(consumoM[anoAtual] - VolM[anoAtual]);
+  ConcenM_reb.push(consumoM_reb[anoAtual] - VolM_reb[anoAtual]);
+  ConcenM_per.push(consumoM_per[anoAtual] - VolM_per[anoAtual]);
+
+  ConcenB.push(consumoB[anoAtual] - VolB[anoAtual]);
+  ConcenB_reb.push(consumoB_reb[anoAtual] - VolB_reb[anoAtual]);
+  ConcenB_per.push(consumoB_per[anoAtual] - VolB_per[anoAtual]);
+
+  ConcenBA1.push(consumoBA1[anoAtual] - VolBA1[anoAtual]);
+  ConcenBA1_reb.push(consumoBA1_reb[anoAtual] - VolBA1_reb[anoAtual]);
+  ConcenBA1_per.push(consumoBA1_per[anoAtual] - VolBA1_per[anoAtual]);
+
+  ConcenBA2.push(consumoBA2[anoAtual] - VolBA2[anoAtual]);
+  ConcenBA2_reb.push(consumoBA2_reb[anoAtual] - VolBA2_reb[anoAtual]);
+  ConcenBA2_per.push(consumoBA2_per[anoAtual] - VolBA2_per[anoAtual]);
+
+  ConcenTotal.push(ConcenF[anoAtual] + ConcenM[anoAtual] + ConcenB[anoAtual] + ConcenBA1[anoAtual] + ConcenBA2[anoAtual]);
+  ConcenTotal_reb.push(ConcenF_reb[anoAtual] + ConcenM_reb[anoAtual] + ConcenB_reb[anoAtual] + ConcenBA1_reb[anoAtual] + ConcenBA2_reb[anoAtual]);
+  ConcenTotal_per.push(ConcenF_per[anoAtual] + ConcenM_per[anoAtual] + ConcenB_per[anoAtual] + ConcenBA1_per[anoAtual] + ConcenBA2_per[anoAtual]);
+}
+
+function calcularMateriaSecaConcentrado() {
+  ConcenSecaF.push(ConcenF[anoAtual] / suplementos.materiaSecaConcentrado.femeas);
+  ConcenSecaF_reb.push(ConcenF_reb[anoAtual] / suplementos.materiaSecaConcentrado.femeas);
+  ConcenSecaF_per.push(ConcenF_per[anoAtual] / suplementos.materiaSecaConcentrado.femeas);
+
+  ConcenSecaM.push(ConcenM[anoAtual] / suplementos.materiaSecaConcentrado.machos);
+  ConcenSecaM_reb.push(ConcenM_reb[anoAtual] / suplementos.materiaSecaConcentrado.machos);
+  ConcenSecaM_per.push(ConcenM_per[anoAtual] / suplementos.materiaSecaConcentrado.machos);
+
+  ConcenSecaB.push(ConcenB[anoAtual] / suplementos.materiaSecaConcentrado.borregos);
+  ConcenSecaB_reb.push(ConcenB_reb[anoAtual] / suplementos.materiaSecaConcentrado.borregos);
+  ConcenSecaB_per.push(ConcenB_per[anoAtual] / suplementos.materiaSecaConcentrado.borregos);
+
+  ConcenSecaBA1.push(ConcenBA1[anoAtual] / suplementos.materiaSecaConcentrado.borregas1);
+  ConcenSecaBA1_reb.push(ConcenBA1_reb[anoAtual] / suplementos.materiaSecaConcentrado.borregas1);
+  ConcenSecaBA1_per.push(ConcenBA1_per[anoAtual] / suplementos.materiaSecaConcentrado.borregas1);
+
+  ConcenSecaBA2.push(ConcenBA2[anoAtual] / suplementos.materiaSecaConcentrado.borregas2);
+  ConcenSecaBA2_reb.push(ConcenBA2_reb[anoAtual] / suplementos.materiaSecaConcentrado.borregas2);
+  ConcenSecaBA2_per.push(ConcenBA2_per[anoAtual] / suplementos.materiaSecaConcentrado.borregas2);
+
+  ConcenSecaTotal.push(ConcenSecaF[anoAtual] + ConcenSecaM[anoAtual] + ConcenSecaB[anoAtual] + ConcenSecaBA1[anoAtual] + ConcenSecaBA2[anoAtual]);
+  ConcenSecaTotal_reb.push(ConcenSecaF_reb[anoAtual] + ConcenSecaM_reb[anoAtual] + ConcenSecaB_reb[anoAtual] + ConcenSecaBA1_reb[anoAtual] + ConcenSecaBA2_reb[anoAtual]);
+  ConcenSecaTotal_per.push(ConcenSecaF_per[anoAtual] + ConcenSecaM_per[anoAtual] + ConcenSecaB_per[anoAtual] + ConcenSecaBA1_per[anoAtual] + ConcenSecaBA2_per[anoAtual]);
+}
+
+export function calcularInformacoes(){
+    calcularConsumoTotal();
+    F.textContent = consumoF[controlador].toFixed(2);
+    FR.textContent = consumoF_reb[controlador].toFixed(2);
+    FP.textContent = consumoF_per[controlador].toFixed(2);
+    M.textContent = consumoM[controlador].toFixed(2);
+    MR.textContent = consumoM_reb[controlador].toFixed(2);
+    MP.textContent = consumoM_per[controlador].toFixed(2);
+    B.textContent = consumoB[controlador].toFixed(2);
+    BR.textContent = consumoB_reb[controlador].toFixed(2);
+    BP.textContent = consumoB_per[controlador].toFixed(2);
+    BA1.textContent = consumoBA1[controlador].toFixed(2);
+    BA1R.textContent = consumoBA1_reb[controlador].toFixed(2);
+    BA1P.textContent = consumoBA1_per[controlador].toFixed(2);
+    BA2.textContent = consumoBA2[controlador].toFixed(2);
+    BA2R.textContent = consumoBA2_reb[controlador].toFixed(2);
+    BA2P.textContent = consumoBA2_per[controlador].toFixed(2);
+    T.textContent = consumoTotal[controlador].toFixed(2);
+    TR.textContent = consumoTotal_reb[controlador].toFixed(2);
+    TP.textContent = consumoTotal_per[controlador].toFixed(2);
+    calcularVolumoso();
+    VSF.textContent = VolF[controlador].toFixed(2);
+    VSFR.textContent = VolF_reb[controlador].toFixed(2);
+    VSFP.textContent = VolF_per[controlador].toFixed(2);
+    VSM.textContent = VolM[controlador].toFixed(2);
+    VSMR.textContent = VolM_reb[controlador].toFixed(2);
+    VSMP.textContent = VolM_per[controlador].toFixed(2);
+    VSB.textContent = VolB[controlador].toFixed(2);
+    VSBR.textContent = VolB_reb[controlador].toFixed(2);
+    VSBP.textContent = VolB_per[controlador].toFixed(2);
+    VSBA1.textContent = VolBA1[controlador].toFixed(2);
+    VSBA1R.textContent = VolBA1_reb[controlador].toFixed(2);
+    VSBA1P.textContent = VolBA1_per[controlador].toFixed(2);
+    VSBA2.textContent = VolBA2[controlador].toFixed(2);
+    VSBA2R.textContent = VolBA2_reb[controlador].toFixed(2);
+    VSBA2P.textContent = VolBA2_per[controlador].toFixed(2);
+    VST.textContent = VolTotal[controlador].toFixed(2);
+    VSTR.textContent = VolTotal_reb[controlador].toFixed(2);
+    VSTP.textContent = VolTotal_per[controlador].toFixed(2);
+    calcularMateriaSecaVolumoso();
+    VCF.textContent = VolSecaF[controlador].toFixed(2);
+    VCFR.textContent = VolSecaF_reb[controlador].toFixed(2);
+    VCFP.textContent = VolSecaF_per[controlador].toFixed(2);
+    VCM.textContent = VolSecaM[controlador].toFixed(2);
+    VCMR.textContent = VolSecaM_reb[controlador].toFixed(2);
+    VCMP.textContent = VolSecaM_per[controlador].toFixed(2);
+    VCB.textContent = VolSecaB[controlador].toFixed(2);
+    VCBR.textContent = VolSecaB_reb[controlador].toFixed(2);
+    VCBP.textContent = VolSecaB_per[controlador].toFixed(2);
+    VCBA1.textContent = VolSecaBA1[controlador].toFixed(2);
+    VCBA1R.textContent = VolSecaBA1_reb[controlador].toFixed(2);
+    VCBA1P.textContent = VolSecaBA1_per[controlador].toFixed(2);
+    VCBA2.textContent = VolSecaBA2[controlador].toFixed(2);
+    VCBA2R.textContent = VolSecaBA2_reb[controlador].toFixed(2);
+    VCBA2P.textContent = VolSecaBA2_per[controlador].toFixed(2);
+    VCT.textContent = VolSecaTotal[controlador].toFixed(2);
+    VCTR.textContent = VolSecaTotal_reb[controlador].toFixed(2);
+    VCTP.textContent = VolSecaTotal_per[controlador].toFixed(2);
+    calcularConcentrado();
+    CSF.textContent = ConcenF[controlador].toFixed(2);
+    CSFR.textContent = ConcenF_reb[controlador].toFixed(2);
+    CSFP.textContent = ConcenF_per[controlador].toFixed(2);
+    CSM.textContent = ConcenM[controlador].toFixed(2);
+    CSMR.textContent = ConcenM_reb[controlador].toFixed(2);
+    CSMP.textContent = ConcenM_per[controlador].toFixed(2);
+    CSB.textContent = ConcenB[controlador].toFixed(2);
+    CSBR.textContent = ConcenB_reb[controlador].toFixed(2);
+    CSBP.textContent = ConcenB_per[controlador].toFixed(2);
+    CSBA1.textContent = ConcenBA1[controlador].toFixed(2);
+    CSBA1R.textContent = ConcenBA1_reb[controlador].toFixed(2);
+    CSBA1P.textContent = ConcenBA1_per[controlador].toFixed(2);
+    CSBA2.textContent = ConcenBA2[controlador].toFixed(2);
+    CSBA2R.textContent = ConcenBA2_reb[controlador].toFixed(2);
+    CSBA2P.textContent = ConcenBA2_per[controlador].toFixed(2);
+    CST.textContent = ConcenTotal[controlador].toFixed(2);
+    CSTR.textContent = ConcenTotal_reb[controlador].toFixed(2);
+    CSTP.textContent = ConcenTotal_per[controlador].toFixed(2);
+    calcularMateriaSecaConcentrado();
+    CCF.textContent = ConcenSecaF[controlador].toFixed(2);
+    CCFR.textContent = ConcenSecaF_reb[controlador].toFixed(2);
+    CCFP.textContent = ConcenSecaF_per[controlador].toFixed(2);
+    CCM.textContent = ConcenSecaM[controlador].toFixed(2);
+    CCMR.textContent = ConcenSecaM_reb[controlador].toFixed(2);
+    CCMP.textContent = ConcenSecaM_per[controlador].toFixed(2);
+    CCB.textContent = ConcenSecaB[controlador].toFixed(2);
+    CCBR.textContent = ConcenSecaB_reb[controlador].toFixed(2);
+    CCBP.textContent = ConcenSecaB_per[controlador].toFixed(2);
+    CCBA1.textContent = ConcenSecaBA1[controlador].toFixed(2);
+    CCBA1R.textContent = ConcenSecaBA1_reb[controlador].toFixed(2);
+    CCBA1P.textContent = ConcenSecaBA1_per[controlador].toFixed(2);
+    CCBA2.textContent = ConcenSecaBA2[controlador].toFixed(2);
+    CCBA2R.textContent = ConcenSecaBA2_reb[controlador].toFixed(2);
+    CCBA2P.textContent = ConcenSecaBA2_per[controlador].toFixed(2);
+    CCT.textContent = ConcenSecaTotal[controlador].toFixed(2);
+    CCTR.textContent = ConcenSecaTotal_reb[controlador].toFixed(2);
+    CCTP.textContent = ConcenSecaTotal_per[controlador].toFixed(2);
+}
 
 /*
     console.log("TOTAL:          A/D    R/D     R/P");
@@ -356,6 +449,7 @@ function calcularMateriaSecaConcentrado(){
     console.log("Total:          "+ ConcenTotal[anoAtual].toFixed(2) +"   "+ ConcenTotal_reb[anoAtual].toFixed(2) +"   "+ ConcenTotal_per[anoAtual].toFixed(2) +"   "+ ConcenSecaTotal[anoAtual].toFixed(2) +"   "+ ConcenSecaTotal_reb[anoAtual].toFixed(2) +"   "+ ConcenSecaTotal_per[anoAtual].toFixed(2));
     console.log("");
     */
+/*
 export function atualizarTabela(){
     F.textContent = consumoF[controlador].toFixed(2);
     FR.textContent = consumoF_reb[controlador].toFixed(2);
@@ -452,101 +546,4 @@ export function atualizarTabela(){
     CCTR.textContent = ConcenSecaTotal_reb[controlador].toFixed(2);
     CCTP.textContent = ConcenSecaTotal_per[controlador].toFixed(2);
 }
-
-export function calcularInformacoes(){
-    calcularConsumoTotal();
-    F.textContent = consumoF[0].toFixed(2);
-    FR.textContent = consumoF_reb[0].toFixed(2);
-    FP.textContent = consumoF_per[0].toFixed(2);
-    M.textContent = consumoM[0].toFixed(2);
-    MR.textContent = consumoM_reb[0].toFixed(2);
-    MP.textContent = consumoM_per[0].toFixed(2);
-    B.textContent = consumoB[0].toFixed(2);
-    BR.textContent = consumoB_reb[0].toFixed(2);
-    BP.textContent = consumoB_per[0].toFixed(2);
-    BA1.textContent = consumoBA1[0].toFixed(2);
-    BA1R.textContent = consumoBA1_reb[0].toFixed(2);
-    BA1P.textContent = consumoBA1_per[0].toFixed(2);
-    BA2.textContent = consumoBA2[0].toFixed(2);
-    BA2R.textContent = consumoBA2_reb[0].toFixed(2);
-    BA2P.textContent = consumoBA2_per[0].toFixed(2);
-    T.textContent = consumoTotal[0].toFixed(2);
-    TR.textContent = consumoTotal_reb[0].toFixed(2);
-    TP.textContent = consumoTotal_per[0].toFixed(2);
-    calcularVolumoso();
-    VSF.textContent = VolF[0].toFixed(2);
-    VSFR.textContent = VolF_reb[0].toFixed(2);
-    VSFP.textContent = VolF_per[0].toFixed(2);
-    VSM.textContent = VolM[0].toFixed(2);
-    VSMR.textContent = VolM_reb[0].toFixed(2);
-    VSMP.textContent = VolM_per[0].toFixed(2);
-    VSB.textContent = VolB[0].toFixed(2);
-    VSBR.textContent = VolB_reb[0].toFixed(2);
-    VSBP.textContent = VolB_per[0].toFixed(2);
-    VSBA1.textContent = VolBA1[0].toFixed(2);
-    VSBA1R.textContent = VolBA1_reb[0].toFixed(2);
-    VSBA1P.textContent = VolBA1_per[0].toFixed(2);
-    VSBA2.textContent = VolBA2[0].toFixed(2);
-    VSBA2R.textContent = VolBA2_reb[0].toFixed(2);
-    VSBA2P.textContent = VolBA2_per[0].toFixed(2);
-    VST.textContent = VolTotal[0].toFixed(2);
-    VSTR.textContent = VolTotal_reb[0].toFixed(2);
-    VSTP.textContent = VolTotal_per[0].toFixed(2);
-    calcularMateriaSecaVolumoso();
-    VCF.textContent = VolSecaF[0].toFixed(2);
-    VCFR.textContent = VolSecaF_reb[0].toFixed(2);
-    VCFP.textContent = VolSecaF_per[0].toFixed(2);
-    VCM.textContent = VolSecaM[0].toFixed(2);
-    VCMR.textContent = VolSecaM_reb[0].toFixed(2);
-    VCMP.textContent = VolSecaM_per[0].toFixed(2);
-    VCB.textContent = VolSecaB[0].toFixed(2);
-    VCBR.textContent = VolSecaB_reb[0].toFixed(2);
-    VCBP.textContent = VolSecaB_per[0].toFixed(2);
-    VCBA1.textContent = VolSecaBA1[0].toFixed(2);
-    VCBA1R.textContent = VolSecaBA1_reb[0].toFixed(2);
-    VCBA1P.textContent = VolSecaBA1_per[0].toFixed(2);
-    VCBA2.textContent = VolSecaBA2[0].toFixed(2);
-    VCBA2R.textContent = VolSecaBA2_reb[0].toFixed(2);
-    VCBA2P.textContent = VolSecaBA2_per[0].toFixed(2);
-    VCT.textContent = VolSecaTotal[0].toFixed(2);
-    VCTR.textContent = VolSecaTotal_reb[0].toFixed(2);
-    VCTP.textContent = VolSecaTotal_per[0].toFixed(2);
-    calcularConcentrado();
-    CSF.textContent = ConcenF[0].toFixed(2);
-    CSFR.textContent = ConcenF_reb[0].toFixed(2);
-    CSFP.textContent = ConcenF_per[0].toFixed(2);
-    CSM.textContent = ConcenM[0].toFixed(2);
-    CSMR.textContent = ConcenM_reb[0].toFixed(2);
-    CSMP.textContent = ConcenM_per[0].toFixed(2);
-    CSB.textContent = ConcenB[0].toFixed(2);
-    CSBR.textContent = ConcenB_reb[0].toFixed(2);
-    CSBP.textContent = ConcenB_per[0].toFixed(2);
-    CSBA1.textContent = ConcenBA1[0].toFixed(2);
-    CSBA1R.textContent = ConcenBA1_reb[0].toFixed(2);
-    CSBA1P.textContent = ConcenBA1_per[0].toFixed(2);
-    CSBA2.textContent = ConcenBA2[0].toFixed(2);
-    CSBA2R.textContent = ConcenBA2_reb[0].toFixed(2);
-    CSBA2P.textContent = ConcenBA2_per[0].toFixed(2);
-    CST.textContent = ConcenTotal[0].toFixed(2);
-    CSTR.textContent = ConcenTotal_reb[0].toFixed(2);
-    CSTP.textContent = ConcenTotal_per[0].toFixed(2);
-    calcularMateriaSecaConcentrado();
-    CCF.textContent = ConcenSecaF[0].toFixed(2);
-    CCFR.textContent = ConcenSecaF_reb[0].toFixed(2);
-    CCFP.textContent = ConcenSecaF_per[0].toFixed(2);
-    CCM.textContent = ConcenSecaM[0].toFixed(2);
-    CCMR.textContent = ConcenSecaM_reb[0].toFixed(2);
-    CCMP.textContent = ConcenSecaM_per[0].toFixed(2);
-    CCB.textContent = ConcenSecaB[0].toFixed(2);
-    CCBR.textContent = ConcenSecaB_reb[0].toFixed(2);
-    CCBP.textContent = ConcenSecaB_per[0].toFixed(2);
-    CCBA1.textContent = ConcenSecaBA1[0].toFixed(2);
-    CCBA1R.textContent = ConcenSecaBA1_reb[0].toFixed(2);
-    CCBA1P.textContent = ConcenSecaBA1_per[0].toFixed(2);
-    CCBA2.textContent = ConcenSecaBA2[0].toFixed(2);
-    CCBA2R.textContent = ConcenSecaBA2_reb[0].toFixed(2);
-    CCBA2P.textContent = ConcenSecaBA2_per[0].toFixed(2);
-    CCT.textContent = ConcenSecaTotal[0].toFixed(2);
-    CCTR.textContent = ConcenSecaTotal_reb[0].toFixed(2);
-    CCTP.textContent = ConcenSecaTotal_per[0].toFixed(2);
-}
+*/
