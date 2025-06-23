@@ -1,4 +1,4 @@
-# 🐄 Planeja Pec
+# 🐑 Planeja Pec
 
 **Planeja Pec** é um sistema web inovador criado para auxiliar produtores rurais do Nordeste brasileiro no **planejamento alimentar e na simulação da evolução de rebanhos de pequenos ruminantes**.
 
